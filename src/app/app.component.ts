@@ -24,5 +24,20 @@ export class AppComponent implements OnInit {
       apiVersion: '2025-04',
       publicAccessToken: '39cfa45b34ebf7e60edfa593fe37d2e7',
     });
+
+    const productQuery = `
+      query getAllProducts {
+        products(first: 5) {
+          nodes {
+            title
+            description
+          }
+        }
+      }
+    `;
+
+    client
+      .request(productQuery, {})
+      .then((result) => console.log('result', result));
   }
 }
