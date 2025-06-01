@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   template: `
     <header class="header">
-      <h1 class="h1">Hello World!</h1>
+      <ng-content></ng-content>
     </header>
   `,
 })
