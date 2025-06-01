@@ -3,4 +3,24 @@
 .body {
   background: $color-white;
   color: $color-black;
+
+  .app-root {
+    background-color: white;
+
+    .app-header {
+      .header {
+        background-color: brown;
+      }
+    }
+    .app-main {
+      .main {
+        background-color: burlywood;
+      }
+    }
+    .app-footer {
+      .footer {
+        background-color: brown;
+      }
+    }
+  }
 }
