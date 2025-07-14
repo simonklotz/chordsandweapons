@@ -6,5 +6,21 @@
 
   .app-root {
     background-color: white;
+
+    .app-header {
+      .header {
+        background-color: slateblue;
+      }
+    }
+    .app-main {
+      .main {
+        background-color: snow;
+      }
+    }
+    .app-footer {
+      .footer {
+        background-color: slateblue;
+      }
+    }
   }
 }
