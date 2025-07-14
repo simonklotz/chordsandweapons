@@ -1,0 +1,33 @@
+@use "../abstracts/fonts" as *;
+@use "../abstracts/variables" as *;
+
+html {
+  // standard root-font-size of 16px is set to 10px (16 * 0,625 = 10)
+  // so that it's easier to work with rem:
+  // 1rem = 10px, 1.5rem = 15px, 2.1rem = 21px, ...
+  font-size: 62.5%;
+}
+
+.body {
+  font-family: "Source Code Pro Regular", monospace;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+  @media only screen and (min-width: 601px) {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .h1 {
+    @media only screen and (max-width: $max-width) {
+      font-size: 3.2rem;
+      line-height: 1.2;
+    }
+    @media only screen and (min-width: $min-width) {
+      font-size: 3.6rem;
+      line-height: 1.25;
+    }
+  }
+}
