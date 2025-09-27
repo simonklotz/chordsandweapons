@@ -1,0 +1,59 @@
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { NavMenuComponent } from './nav-menu.component';
+import { NavMenu } from './nav-menu.interface';
+import { NgOptimizedImage } from '@angular/common';
+import { genreMenuConfig } from './configs/genre-menu-config';
+import { moreMenuConfig } from './configs/more-menu-config';
+
+@Component({
+  selector: 'app-nav-bar',
+  standalone: true,
+  imports: [RouterLink, NavMenuComponent, NgOptimizedImage],
+  template: `
+    <nav class="nav" aria-label="Main Navigation">
+      <div class="nav__left">
+        <div class="nav__item">
+          <a class="nav__link" routerLink="/">LOGO</a>
+        </div>
+        <ul class="nav__list">
+          <li class="nav__item">
+            <app-nav-menu class="nav-menu" [navMenu]="genreMenu"></app-nav-menu>
+          </li>
+          <li class="nav__item">
+            <app-nav-menu class="nav-menu" [navMenu]="moreMenu"></app-nav-menu>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav__right">
+        <ul class="nav__list">
+          <li class="nav__item" tabindex="0">
+            <img
+              class="nav__icon"
+              ngSrc="icons/search_32dp.svg"
+              alt="search"
+              height="32"
+              width="32"
+            />
+          </li>
+
+          <li class="nav__item">
+            <a class="nav__link" routerLink="/cart">
+              <img
+                ngSrc="icons/shopping_cart_32dp.svg"
+                alt="shopping cart"
+                height="32"
+                width="32"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  `,
+})
+export class NavBarComponent {
+  genreMenu: NavMenu = genreMenuConfig;
+  moreMenu: NavMenu = moreMenuConfig;
+}
