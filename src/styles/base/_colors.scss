@@ -9,7 +9,6 @@
 
     .app-header {
       .header {
-        background-color: slateblue;
       }
     }
     .app-main {
@@ -19,8 +18,16 @@
     }
     .app-footer {
       .footer {
-        background-color: slateblue;
+        color: snow;
+        background-color: black;
       }
     }
+  }
+}
+
+* {
+  &::selection {
+    background-color: #DFFF06;
+    color: black;
   }
 }
