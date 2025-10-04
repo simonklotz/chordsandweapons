@@ -11,13 +11,13 @@ import { RouteData } from './route-data.interface';
   standalone: true,
   imports: [ProductTileComponent],
   template: `
-    <div>
-      <h1 class="h1">{{ title }}</h1>
-      <div class="search-result-wrapper">
+    <div class="search-result">
+      <h1 class="search-result__title h1">{{ title }}</h1>
+      <div class="search-result__wrapper">
         @for (product of products().products; track product) {
           <app-product-tile
             [product]="product"
-            class="app-product-tile"
+            class="product-tile"
           ></app-product-tile>
         }
       </div>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ProductResponse } from './product-response.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -11,8 +11,12 @@ export class ApiService {
   private readonly _http = inject(HttpClient);
 
   getProducts(): Observable<ProductResponse> {
-    return this._http
-      .get<ProductResponse>(this.BASE_URL + '/products')
-      .pipe(tap((result) => console.log('result', result)));
+    return this._http.get<ProductResponse>(this.BASE_URL + '/products').pipe(
+      tap((result) => console.log('result', result)),
+      map((result) => ({
+        products: [...result.products, ...result.products, ...result.products],
+        pageInfo: result.pageInfo,
+      })),
+    );
   }
 }

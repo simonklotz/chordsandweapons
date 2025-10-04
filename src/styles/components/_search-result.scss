@@ -1,0 +1,17 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/media-queries" as *;
+
+.search-result {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    // 984
+    @media only screen and (min-width: 1010px) {
+      // 3 x 240 + 3 * 10
+      width: 990px;
+      margin: auto;
+    }
+  }
+}

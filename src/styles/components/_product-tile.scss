@@ -1,0 +1,28 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/media-queries" as *;
+
+.product-tile {
+  @include for-xxs-screen {
+    width: calc(100% - 20px);
+    margin: auto;
+  }
+
+  @include for-xs-screen {
+    width: calc(50% - 15px);
+    margin-left: 10px;
+  }
+
+  @media only screen and (min-width: $screen-sm-min) and (max-width: 1009px) {
+    width: calc(50% - 15px);
+    margin-left: 10px;
+  }
+
+  @media only screen and (min-width: 1010px) {
+    width: 240px;
+    margin-left: 10px;
+
+    &:nth-of-type(4n + 1) {
+      margin-left: 0;
+    }
+  }
+}
