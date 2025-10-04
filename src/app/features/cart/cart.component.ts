@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-cart',
   standalone: true,
   imports: [],
-  template: `<h1>This is your Cart!</h1>`,
+  template: `<h1 i18n>Das ist dein Warenkorb!</h1>`,
 })
 export class CartComponent {}

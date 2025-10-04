@@ -1,0 +1,8 @@
+.search-result-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: 500px) {
+    flex-direction: row;
+  }
+}

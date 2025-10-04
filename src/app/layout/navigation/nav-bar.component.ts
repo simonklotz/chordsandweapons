@@ -32,7 +32,9 @@ import { moreMenuConfig } from './configs/more-menu-config';
             <img
               class="nav__icon"
               ngSrc="icons/search_32dp.svg"
-              alt="search"
+              alt="suche"
+              i18n-title
+              title="Suche"
               height="32"
               width="32"
             />
@@ -42,7 +44,9 @@ import { moreMenuConfig } from './configs/more-menu-config';
             <a class="nav__link" routerLink="/cart">
               <img
                 ngSrc="icons/shopping_cart_32dp.svg"
-                alt="shopping cart"
+                alt="Warenkorb"
+                i18n-title
+                title="Warenkorb"
                 height="32"
                 width="32"
               />
