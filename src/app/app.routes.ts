@@ -31,6 +31,11 @@ export const routes: Routes = [
     data: { title: 'Breaks' },
   },
   {
+    path: 'search',
+    component: SearchResultComponent,
+    data: { title: 'Search result' },
+  },
+  {
     path: 'contact',
     component: ContactComponent,
   },

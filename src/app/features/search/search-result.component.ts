@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { ProductResponse } from '../../core/product-response.interface';
 import { ProductTileComponent } from '../../shared/product/product-tile.component';
-import { RouteData } from './route-data.interface';
+import { RouteData } from './models/route-data.interface';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'app-search-result',
@@ -12,7 +13,11 @@ import { RouteData } from './route-data.interface';
   imports: [ProductTileComponent],
   template: `
     <div class="search-result">
-      <h1 class="search-result__title h1">{{ title }}</h1>
+      @if (title === 'Search result' && search.query()) {
+        <h1 class="search-result__title h1">{{ title }}: {{ search.query() }}</h1>
+      } @else {
+        <h1 class="search-result__title h1">{{ title }}</h1>
+      }
       <div class="search-result__wrapper">
         @for (product of products().products; track product) {
           <app-product-tile
@@ -25,6 +30,8 @@ import { RouteData } from './route-data.interface';
   `,
 })
 export class SearchResultComponent {
+  readonly search = inject(SearchService);
+
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _apiService = inject(ApiService);
 

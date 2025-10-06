@@ -10,3 +10,7 @@
     height: 100%;
   }
 }
+
+.cdk-global-scrollblock > * {
+  overflow-y: hidden;
+}

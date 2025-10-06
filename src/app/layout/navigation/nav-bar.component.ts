@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NavMenuComponent } from './nav-menu.component';
 import { NavMenu } from './nav-menu.interface';
 import { NgOptimizedImage } from '@angular/common';
 import { genreMenuConfig } from './configs/genre-menu-config';
 import { moreMenuConfig } from './configs/more-menu-config';
+import { SearchService } from '../../features/search/search.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -28,7 +29,12 @@ import { moreMenuConfig } from './configs/more-menu-config';
 
       <div class="nav__right">
         <ul class="nav__list">
-          <li class="nav__item" tabindex="0">
+          <li
+            class="nav__item"
+            tabindex="0"
+            (click)="onSearch()"
+            (keydown.enter)="onSearch()"
+          >
             <img
               class="nav__icon"
               ngSrc="icons/search_32dp.svg"
@@ -60,4 +66,10 @@ import { moreMenuConfig } from './configs/more-menu-config';
 export class NavBarComponent {
   genreMenu: NavMenu = genreMenuConfig;
   moreMenu: NavMenu = moreMenuConfig;
+
+  private readonly _searchService = inject(SearchService);
+
+  onSearch(): void {
+    this._searchService.onSearch();
+  }
 }
