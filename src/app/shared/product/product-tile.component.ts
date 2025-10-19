@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Product } from './product.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-tile',
@@ -8,10 +9,13 @@ import { Product } from './product.interface';
   template: `
     <div class="product-tile__wrapper">
       <img
+        tabindex="0"
         class="product-image"
         [src]="imageUrl"
         [alt]="altText"
         width="100%"
+        (click)="openDetailView()"
+        (keydown.enter)="openDetailView()"
       />
       <div class="product-info">
         <h3 class="product-info__title">
@@ -35,5 +39,11 @@ export class ProductTileComponent {
 
   get altText(): string {
     return `${this.product()?.title} artwork`;
+  }
+
+  private readonly _router = inject(Router);
+
+  openDetailView(): void {
+    this._router.navigate(['release', this.product()?.id]);
   }
 }
