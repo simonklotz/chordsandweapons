@@ -36,6 +36,13 @@ export const routes: Routes = [
     data: { title: 'Search result' },
   },
   {
+    path: 'release/:id',
+    loadComponent: () =>
+      import('./features/product/product-detail.component').then(
+        (m) => m.ProductDetailComponent,
+      ),
+  },
+  {
     path: 'contact',
     component: ContactComponent,
   },
