@@ -34,6 +34,7 @@ import { SearchService } from '../../features/search/search.service';
             tabindex="0"
             (click)="onSearch()"
             (keydown.enter)="onSearch()"
+            (keydown.space)="onSearch()"
           >
             <img
               class="nav__icon"

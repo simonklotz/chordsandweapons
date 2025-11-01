@@ -1,7 +1,7 @@
-import { Component, inject, input } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
-import { Product } from './product.interface';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductListItem } from '../../core/models/product-list-item.interface';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-tile',
@@ -16,34 +16,48 @@ import { Router } from '@angular/router';
         width="100%"
         (click)="openDetailView()"
         (keydown.enter)="openDetailView()"
+        (keydown.space)="openDetailView()"
       />
       <div class="product-info">
         <h3 class="product-info__title">
-          {{ product()?.title }}
+          {{ product().title }}
         </h3>
-        <h4 class="product-info__artist">{{ product()?.artist }}</h4>
+        <h4 class="product-info__artist">{{ product().artist }}</h4>
         <div>
-          <span>{{ product()?.price | currency }}</span>
+          <span>{{ price | currency: currencyCode : true }}</span>
         </div>
       </div>
     </div>
   `,
   imports: [CurrencyPipe],
 })
-export class ProductTileComponent {
-  readonly product = input<Product>();
-
-  get imageUrl(): string {
-    return this.product()?.imageUrl ?? 'images/fallback-artwork.jpg';
-  }
-
-  get altText(): string {
-    return `${this.product()?.title} artwork`;
-  }
+export class ProductTileComponent implements OnInit {
+  readonly product = input.required<ProductListItem>();
 
   private readonly _router = inject(Router);
 
+  get imageUrl(): string {
+    return this.product().imageUrl ?? 'images/fallback-artwork.jpg';
+  }
+
+  get altText(): string {
+    return `${this.product().title} artwork`;
+  }
+
+  get price(): string {
+    return this.product().price.amount;
+  }
+
+  get currencyCode(): string {
+    return this.product().price.currencyCode;
+  }
+
+  ngOnInit() {
+    console.log('Product', this.product());
+    console.log('Price', this.product().price);
+  }
+
   openDetailView(): void {
-    this._router.navigate(['release', this.product()?.id]);
+    this._router.navigate(['release', this.product().id]);
   }
 }

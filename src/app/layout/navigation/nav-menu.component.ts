@@ -20,6 +20,7 @@ import { NgOptimizedImage } from '@angular/common';
       class="nav-menu__wrapper"
       (click)="toggle()"
       (keydown.enter)="toggle()"
+      (keydown.space)="toggle()"
     >
       <span class="nav-menu__label nav__label">
         {{ navMenu().label }}

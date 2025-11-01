@@ -1,0 +1,78 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/media-queries" as *;
+
+.product-detail-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  width: 100%;
+  max-width: 564px;
+  margin: auto;
+
+  padding: 15px 15px 28px;
+
+  @include for-large-screen {
+    grid-template-columns: auto 500px;
+    max-width: 1088px;
+    padding: 36px 32px 36px;
+  }
+
+  @include for-xl-screen {
+    grid-template-columns: auto 550px;
+    max-width: 1188px;
+    padding: 36px 32px 36px;
+  }
+
+  @include for-xxl-screen {
+    grid-template-columns: auto 600px;
+    max-width: 1288px;
+    padding: 36px 32px 36px;
+  }
+
+  .product-artwork {
+    grid-column: 1;
+
+    &__img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .product-info {
+    grid-column: 1;
+
+    @media (min-width: $screen-lg-min) {
+      grid-column: 2;
+    }
+
+    &-item {
+      margin-bottom: 16px;
+    }
+
+    .add-to-cart-form {
+      &__quantity {
+        width: 100%;
+      }
+
+      &__submit {
+        width: 100%;
+        height: 48px;
+        margin-top: 16px;
+
+        font-family: "Source Code Pro Regular", monospace;
+        font-size: 1.8rem;
+
+        color: $color-white;
+        background-color: $color-black;
+        border: 2px solid $color-black;
+
+        &:hover {
+          color: $color-black;
+          background-color: $color-white;
+        }
+      }
+    }
+  }
+}

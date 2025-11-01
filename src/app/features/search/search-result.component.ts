@@ -1,11 +1,11 @@
 import { Component, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../core/api.service';
-import { ProductResponse } from '../../core/product-response.interface';
+import { ProductApiService } from '../../core/services/product-api.service';
 import { ProductTileComponent } from '../../shared/product/product-tile.component';
 import { RouteData } from './models/route-data.interface';
 import { SearchService } from './search.service';
+import { ProductListResponse } from '../../core/models/product-list-response.interface';
 
 @Component({
   selector: 'app-search-result',
@@ -14,7 +14,9 @@ import { SearchService } from './search.service';
   template: `
     <div class="search-result">
       @if (title === 'Search result' && search.query()) {
-        <h1 class="search-result__title h1">{{ title }}: {{ search.query() }}</h1>
+        <h1 class="search-result__title h1">
+          {{ title }}: {{ search.query() }}
+        </h1>
       } @else {
         <h1 class="search-result__title h1">{{ title }}</h1>
       }
@@ -33,15 +35,18 @@ export class SearchResultComponent {
   readonly search = inject(SearchService);
 
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _apiService = inject(ApiService);
+  private readonly _apiService = inject(ProductApiService);
 
-  products: Signal<ProductResponse>;
+  products: Signal<ProductListResponse>;
 
   constructor() {
     this.products = toSignal(this._apiService.getProducts(), {
       initialValue: {
         products: [],
-        pageInfo: { hasNextPage: false, endCursor: null },
+        total: 0,
+        page: 0,
+        limit: 0,
+        hasNextPage: false,
       },
     });
   }

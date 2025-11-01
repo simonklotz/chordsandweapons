@@ -1,37 +1,50 @@
 @use "./variables" as *;
 
+// Extra Small Mobile (Portrait): 320px - 480px
 @mixin for-xxs-screen {
   @media only screen and (max-width: $screen-xxs-max) {
     @content;
   }
 }
 
+// Small Mobile (Landscape): 481px - 600px
 @mixin for-xs-screen {
   @media only screen and (min-width: $screen-xs-min) and (max-width: $screen-xs-max) {
     @content;
   }
 }
 
+// Small Tablets (Portrait): 601px - 768px
 @mixin for-small-screen {
   @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     @content;
   }
 }
 
+// Large Tablets (Landscape): 769px - 1024px
 @mixin for-medium-screen {
   @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     @content;
   }
 }
 
+// Small Desktops and Laptops: 1025px - 1280px
 @mixin for-large-screen {
   @media only screen and (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
     @content;
   }
 }
 
+// Large Desktops and High-Resolution Screens: 1281px - 1440px
 @mixin for-xl-screen {
-  @media only screen and (min-width: $screen-xl-min) {
+  @media only screen and (min-width: $screen-xl-min) and (max-width: $screen-xl-max) {
+    @content;
+  }
+}
+
+// Extra-Large Desktops: 1441px and up
+@mixin for-xxl-screen {
+  @media only screen and (min-width: $screen-xxl-min) {
     @content;
   }
 }

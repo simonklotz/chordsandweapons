@@ -1,0 +1,67 @@
+@use "../abstracts/variables" as *;
+
+.quantity-input {
+  display: flex;
+  width: 100%;
+  border: 2px solid $color-black;
+
+  &__button {
+    width: 48px;
+    height: 48px;
+
+    color: $color-white;
+    background-color: $color-black;
+
+    font-family: "Source Code Pro Regular", monospace;
+    font-size: 2.5rem;
+
+    &-left {
+      border-right: 2px solid $color-black;
+    }
+
+    &-right {
+      border-left: 2px solid $color-black;
+    }
+
+    &:hover {
+      color: $color-black;
+      background-color: $color-white;
+    }
+
+    &:active {
+      color: $color-black;
+      background-color: $color-white;
+    }
+
+    &:disabled {
+      cursor: default;
+      color: darkgray;
+      background-color: lightgray;
+    }
+  }
+
+  &__input-field {
+    width: calc(100% - 96px);
+    height: 48px;
+    text-align: center;
+    font-family: "Source Code Pro Regular", monospace;
+    font-size: 1.8rem;
+
+    &:focus {
+      // TODO return custom outline for accessibility
+      outline: none;
+    }
+
+    /* hiding arrows on Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* hiding arrows on Firefox */
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+}

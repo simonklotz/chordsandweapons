@@ -1,20 +1,19 @@
 /* COLOR VARIABLES */
 $color-white: #ffffff;
 $color-black: #000000;
-
-/* DISPLAY WIDTH */
-$max-width: 600px;
-$min-width: $max-width + 1;
+$color-accent: #dfff06;
 
 /* BREAKPOINTS */
-$screen-xxs-max: 360px;
-$screen-xs-max: 576px;
-$screen-sm-max: 767px;
-$screen-md-max: 983px;
-$screen-lg-max: 1223px;
+$screen-xxs-max: 480px;
+$screen-xs-max: 600px;
+$screen-sm-max: 768px;
+$screen-md-max: 1024px;
+$screen-lg-max: 1280px;
+$screen-xl-max: 1440px;
 
 $screen-xs-min: $screen-xxs-max + 1;
 $screen-sm-min: $screen-xs-max + 1;
 $screen-md-min: $screen-sm-max + 1;
 $screen-lg-min: $screen-md-max + 1;
 $screen-xl-min: $screen-lg-max + 1;
+$screen-xxl-min: $screen-xl-max + 1;
