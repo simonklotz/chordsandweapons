@@ -7,10 +7,23 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    // 984
-    @media only screen and (min-width: 1010px) {
-      // 3 x 240 + 3 * 10
-      width: 990px;
+    @include for-medium-screen {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    @include for-large-screen {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    @include for-xl-screen {
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    @include for-xxl-screen {
+      max-width: 1400px;
       margin: auto;
     }
   }

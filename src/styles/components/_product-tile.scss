@@ -4,22 +4,42 @@
 .product-tile {
   @include for-xxs-screen {
     width: calc(100% - 20px);
-    margin: auto;
+    margin: auto auto 16px;
   }
 
   @include for-xs-screen {
     width: calc(50% - 15px);
     margin-left: 10px;
+    margin-bottom: 16px;
   }
 
-  @media only screen and (min-width: $screen-sm-min) and (max-width: 1009px) {
-    width: calc(50% - 15px);
-    margin-left: 10px;
+  @include for-small-screen {
+    width: calc(50% - 18px);
+    margin-left: 12px;
+    margin-bottom: 20px;
   }
 
-  @media only screen and (min-width: 1010px) {
-    width: 240px;
-    margin-left: 10px;
+  @include for-medium-screen {
+    width: calc(50% - 18px);
+    margin: auto auto 20px;
+  }
+
+  @include for-large-screen {
+    width: calc(25% - 15px);
+    margin-left: 12px;
+    margin-bottom: 20px;
+  }
+
+  @include for-xl-screen {
+    width: calc(25% - 15px);
+    margin-left: 12px;
+    margin-bottom: 20px;
+  }
+
+  @include for-xxl-screen {
+    width: calc(25% - 9px);
+    margin-left: 12px;
+    margin-bottom: 20px;
 
     &:nth-of-type(4n + 1) {
       margin-left: 0;
