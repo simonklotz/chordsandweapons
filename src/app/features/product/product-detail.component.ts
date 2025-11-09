@@ -1,10 +1,12 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../core/models/product.interface';
 import { CurrencyPipe } from '@angular/common';
 import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { AudioPlayerService } from '../../core/services/audio-player.service';
+import { Track } from '../../core/models/track.interface';
 
 @Component({
   selector: 'app-product-detail',
@@ -42,6 +44,33 @@ import { Subject } from 'rxjs';
             Add to cart
           </button>
         </form>
+        <div class="product-info-item product-track-list">
+          @for (
+            track of product.trackList;
+            track track.position;
+            let idx = $index
+          ) {
+            <div
+              [id]="'track-' + idx"
+              tabindex="0"
+              class="playlist-track"
+              (click)="playTrack(idx, track)"
+              (keydown.enter)="playTrack(idx, track)"
+              (keydown.space)="playTrack(idx, track)"
+            >
+              <div class="playlist-track-button">
+                <img
+                  [id]="'icon-' + idx"
+                  [src]="trackIcon()"
+                  alt="search submit"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="playlist-track-title">{{ track.title }}</div>
+            </div>
+          }
+        </div>
         <div class="product-info-item product-description">
           <p>{{ product.description }}</p>
         </div>
@@ -52,6 +81,7 @@ import { Subject } from 'rxjs';
 })
 export class ProductDetailComponent implements OnInit {
   private readonly _activatedRoute = inject(ActivatedRoute);
+  private readonly _audioPlayer = inject(AudioPlayerService);
 
   decreaseQuantity = new Subject<void>();
   increaseQuantity = new Subject<void>();
@@ -76,12 +106,8 @@ export class ProductDetailComponent implements OnInit {
     return this.product.price.currencyCode;
   }
 
-  ngOnInit(): void {
-    console.log('Product', this.product);
-  }
-
-  addToCart(): void {
-    console.log('AddToCart');
+  ngOnInit() {
+    this._audioPlayer.loadPlaylist(this.product.trackList);
   }
 
   @HostListener('window:keydown.-')
@@ -92,5 +118,24 @@ export class ProductDetailComponent implements OnInit {
   @HostListener('window:keydown.+')
   handlePlusEvent() {
     this.increaseQuantity.next();
+  }
+
+  addToCart(): void {
+    console.log('AddToCart');
+  }
+
+  playIcon = 'icons/play_arrow_24dp_black.svg';
+  pauseIcon = 'icons/pause_24dp_black.svg';
+
+  trackIcon = signal(this.playIcon);
+
+  playTrack(id: number, track: Track): void {
+    this._audioPlayer.play(track);
+
+    this.getPlayingElement(id)?.setAttribute('src', this.pauseIcon)
+  }
+
+  getPlayingElement(index: number): HTMLElement | null {
+    return document.getElementById(`icon-${index}`);
   }
 }

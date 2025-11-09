@@ -74,5 +74,43 @@
         }
       }
     }
+
+    .product-track-list {
+      .playlist-track {
+        display: flex;
+
+        height: 30px;
+
+        &:hover {
+          //border: 2px solid $color-black;
+          background-color: $color-accent;
+        }
+
+        &:focus {
+          outline: 2px solid $color-black;
+        }
+
+        &:active {
+          border: 2px solid $color-black;
+        }
+
+        &-button {
+          cursor: pointer;
+
+          //&__play {
+          //  background-image: url("icons/play_arrow_24dp_black.svg");
+          //}
+          //
+          //&__pause {
+          //  background-image: url("icons/pause_24dp_black.svg");
+          //}
+        }
+
+        &-title {
+          cursor: pointer;
+          width: 100%;
+        }
+      }
+    }
   }
 }
