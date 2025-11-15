@@ -27,7 +27,7 @@ import { DialogRef } from '@angular/cdk/dialog';
           [disabled]="form.invalid"
         >
           <img
-            ngSrc="icons/search_32dp.svg"
+            ngSrc="assets/icons/search_32dp.svg"
             alt="search submit"
             width="32"
             height="32"
@@ -35,7 +35,7 @@ import { DialogRef } from '@angular/cdk/dialog';
         </button>
         <button type="button" class="button button__close" (click)="onClose()">
           <img
-            ngSrc="icons/close_32dp.svg"
+            ngSrc="assets/icons/close_32dp.svg"
             alt="close dialog"
             width="32"
             height="32"

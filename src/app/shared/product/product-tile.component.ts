@@ -1,23 +1,34 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
+import { CurrencyPipe, NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductListItem } from '../../core/models/product-list-item.interface';
-import { CurrencyPipe } from '@angular/common';
+import { AudioPlayerService } from '../../features/audio-player/audio-player.service';
+import { PlayButtonComponent } from '../../features/audio-player/components/play-button.component';
 
 @Component({
   selector: 'app-product-tile',
   standalone: true,
   template: `
-    <div class="product-tile__wrapper">
-      <img
-        tabindex="0"
+    <div
+      tabindex="0"
+      class="product-tile__wrapper"
+      (click)="openDetailView()"
+      (keydown.enter)="openDetailView()"
+      (keydown.space)="openDetailView()"
+    >
+      <div
         class="product-image"
-        [src]="imageUrl"
-        [alt]="altText"
-        width="100%"
-        (click)="openDetailView()"
-        (keydown.enter)="openDetailView()"
-        (keydown.space)="openDetailView()"
-      />
+        [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+      >
+        <div class="product-image-overlay"></div>
+        @if (hasTrackPreview) {
+          <app-play-button
+            [isPlaying]="isPlaying()"
+            [opticalSize]="30"
+            (clicked)="togglePlayPause($event)"
+          ></app-play-button>
+        }
+      </div>
       <div class="product-info">
         <h3 class="product-info__title">
           {{ product().title }}
@@ -29,15 +40,22 @@ import { CurrencyPipe } from '@angular/common';
       </div>
     </div>
   `,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, NgStyle, PlayButtonComponent],
 })
 export class ProductTileComponent implements OnInit {
-  readonly product = input.required<ProductListItem>();
-
   private readonly _router = inject(Router);
 
+  readonly product = input.required<ProductListItem>();
+  readonly audioPlayer = inject(AudioPlayerService);
+
+  readonly isPlaying = computed(
+    () =>
+      this.audioPlayer.isPlaying() &&
+      this.audioPlayer.playlist()?.productId === this.product().id,
+  );
+
   get imageUrl(): string {
-    return this.product().imageUrl ?? 'images/fallback-artwork.jpg';
+    return this.product().imageUrl ?? 'assets/images/fallback-artwork.jpg';
   }
 
   get altText(): string {
@@ -52,12 +70,36 @@ export class ProductTileComponent implements OnInit {
     return this.product().price.currencyCode;
   }
 
+  get hasTrackPreview(): boolean {
+    return this.product().trackList.some((track) => track.previewUrl);
+  }
+
   ngOnInit() {
     console.log('Product', this.product());
-    console.log('Price', this.product().price);
   }
 
   openDetailView(): void {
     this._router.navigate(['release', this.product().id]);
+  }
+
+  togglePlayPause(event: Event): void {
+    event.stopPropagation();
+
+    if (
+      !this.audioPlayer.playlist() ||
+      this.audioPlayer.playlist()?.productId !== this.product().id
+    ) {
+      this.audioPlayer.loadPlaylist(
+        this.product().id,
+        this.product().trackList,
+        this.product().imageUrl,
+        this.product().price,
+        0,
+      );
+    } else if (this.audioPlayer.isPlaying()) {
+      this.audioPlayer.pause();
+    } else {
+      this.audioPlayer.play();
+    }
   }
 }

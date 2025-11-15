@@ -1,5 +1,6 @@
 import { Price } from './price.interface';
 import { InventoryStatus } from './inventory-status.type';
+import { Track } from './track.interface';
 
 export interface ProductListItem {
   id: number;
@@ -8,5 +9,5 @@ export interface ProductListItem {
   price: Price;
   imageUrl: string;
   inventoryStatus: InventoryStatus;
-  trackList: string[];
+  trackList: Track[];
 }

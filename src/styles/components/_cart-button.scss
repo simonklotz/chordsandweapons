@@ -1,0 +1,12 @@
+@use "../abstracts/variables" as *;
+
+.cart-button {
+  display: flex;
+  align-self: center;
+  cursor: pointer;
+  background: none;
+
+  .cart-icon {
+    fill: $color-black;
+  }
+}

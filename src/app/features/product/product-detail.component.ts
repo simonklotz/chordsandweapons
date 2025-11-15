@@ -5,6 +5,8 @@ import { CurrencyPipe } from '@angular/common';
 import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { Track } from '../../core/models/track.interface';
+import { AudioPlayerService } from '../audio-player/audio-player.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,13 +20,13 @@ import { Subject } from 'rxjs';
           [alt]="altText"
         />
       </div>
-      <div class="grid-item product-info">
-        <div class="product-info-item product-heading">
-          <h2>{{ product.artist }} - {{ product.title }}</h2>
-        </div>
-        <div class="product-info-item product-price">
-          <strong>{{ price | currency: currencyCode }}</strong>
-        </div>
+      <div class="grid-item product-heading">
+        <h2>{{ product.artist }} - {{ product.title }}</h2>
+      </div>
+      <div class="grid-item product-price">
+        <strong>{{ price | currency: currencyCode }}</strong>
+      </div>
+      <div class="grid-item product-add-to-cart">
         <form
           class="product-info-item add-to-cart-form"
           [formGroup]="addToCartForm"
@@ -42,9 +44,25 @@ import { Subject } from 'rxjs';
             Add to cart
           </button>
         </form>
-        <div class="product-info-item product-description">
-          <p>{{ product.description }}</p>
-        </div>
+      </div>
+      <div class="grid-item product-tracklist">
+        <h3 class="product-tracklist__heading">Tracklist</h3>
+        <ul class="product-tracklist__list">
+          @for (track of product.trackList; track track.position) {
+            <li
+              tabindex="0"
+              class="product-tracklist__list-item"
+              (click)="playTrack(track)"
+              (keydown.enter)="playTrack(track)"
+              (keydown.space)="playTrack(track)"
+            >
+              {{ track.title }}
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="grid-item product-description">
+        <p>{{ product.description }}</p>
       </div>
     </div>
   `,
@@ -52,6 +70,7 @@ import { Subject } from 'rxjs';
 })
 export class ProductDetailComponent implements OnInit {
   private readonly _activatedRoute = inject(ActivatedRoute);
+  private readonly _audioPlayerService = inject(AudioPlayerService);
 
   decreaseQuantity = new Subject<void>();
   increaseQuantity = new Subject<void>();
@@ -92,5 +111,22 @@ export class ProductDetailComponent implements OnInit {
   @HostListener('window:keydown.+')
   handlePlusEvent() {
     this.increaseQuantity.next();
+  }
+
+  playTrack(track: Track): void {
+    if (
+      !this._audioPlayerService.playlist() ||
+      this._audioPlayerService.playlist()?.productId !== this.product.id
+    ) {
+      this._audioPlayerService.loadPlaylist(
+        this.product.id,
+        this.product.trackList,
+        this.product.imageUrl,
+        this.product.price,
+        track.position - 1,
+      );
+    } else {
+      this._audioPlayerService.playTrack(track.position - 1);
+    }
   }
 }

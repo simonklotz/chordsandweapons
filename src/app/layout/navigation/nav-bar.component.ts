@@ -35,7 +35,7 @@ import { NavMenu } from './nav-menu.interface';
         >
           <img
             class="nav__icon"
-            ngSrc="icons/search_32dp.svg"
+            ngSrc="assets/icons/search_32dp.svg"
             alt="suche"
             i18n-title
             title="Suche"
@@ -46,7 +46,7 @@ import { NavMenu } from './nav-menu.interface';
         <li class="nav__item">
           <a class="nav__link" routerLink="/cart">
             <img
-              ngSrc="icons/shopping_cart_32dp.svg"
+              ngSrc="assets/icons/shopping_cart_32dp.svg"
               alt="Warenkorb"
               i18n-title
               title="Warenkorb"

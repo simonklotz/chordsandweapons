@@ -24,7 +24,7 @@ import { ProductListResponse } from '../../core/models/product-list-response.int
         @for (product of products().products; track product) {
           <app-product-tile
             [product]="product"
-            class="product-tile"
+            class="app-product-tile"
           ></app-product-tile>
         }
       </div>
