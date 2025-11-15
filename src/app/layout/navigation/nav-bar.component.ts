@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { NavMenuComponent } from './nav-menu.component';
-import { NavMenu } from './nav-menu.interface';
 import { NgOptimizedImage } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { SearchService } from '../../features/search/search.service';
 import { genreMenuConfig } from './configs/genre-menu-config';
 import { moreMenuConfig } from './configs/more-menu-config';
-import { SearchService } from '../../features/search/search.service';
+import { NavMenuComponent } from './nav-menu.component';
+import { NavMenu } from './nav-menu.interface';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,54 +13,49 @@ import { SearchService } from '../../features/search/search.service';
   imports: [RouterLink, NavMenuComponent, NgOptimizedImage],
   template: `
     <nav class="nav" aria-label="Main Navigation">
-      <div class="nav__left">
-        <div class="nav__item">
+      <ul class="nav__left nav__list">
+        <li class="nav__item">
           <a class="nav__link" routerLink="/">LOGO</a>
-        </div>
-        <ul class="nav__list">
-          <li class="nav__item">
-            <app-nav-menu class="nav-menu" [navMenu]="genreMenu"></app-nav-menu>
-          </li>
-          <li class="nav__item">
-            <app-nav-menu class="nav-menu" [navMenu]="moreMenu"></app-nav-menu>
-          </li>
-        </ul>
-      </div>
+        </li>
+        <li class="nav__item">
+          <app-nav-menu class="nav-menu" [navMenu]="genreMenu"></app-nav-menu>
+        </li>
+        <li class="nav__item">
+          <app-nav-menu class="nav-menu" [navMenu]="moreMenu"></app-nav-menu>
+        </li>
+      </ul>
 
-      <div class="nav__right">
-        <ul class="nav__list">
-          <li
-            class="nav__item"
-            tabindex="0"
-            (click)="onSearch()"
-            (keydown.enter)="onSearch()"
-            (keydown.space)="onSearch()"
-          >
+      <ul class="nav__right">
+        <li
+          class="nav__item"
+          tabindex="0"
+          (click)="onSearch()"
+          (keydown.enter)="onSearch()"
+          (keydown.space)="onSearch()"
+        >
+          <img
+            class="nav__icon"
+            ngSrc="icons/search_32dp.svg"
+            alt="suche"
+            i18n-title
+            title="Suche"
+            height="32"
+            width="32"
+          />
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" routerLink="/cart">
             <img
-              class="nav__icon"
-              ngSrc="icons/search_32dp.svg"
-              alt="suche"
+              ngSrc="icons/shopping_cart_32dp.svg"
+              alt="Warenkorb"
               i18n-title
-              title="Suche"
+              title="Warenkorb"
               height="32"
               width="32"
             />
-          </li>
-
-          <li class="nav__item">
-            <a class="nav__link" routerLink="/cart">
-              <img
-                ngSrc="icons/shopping_cart_32dp.svg"
-                alt="Warenkorb"
-                i18n-title
-                title="Warenkorb"
-                height="32"
-                width="32"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
+          </a>
+        </li>
+      </ul>
     </nav>
   `,
 })

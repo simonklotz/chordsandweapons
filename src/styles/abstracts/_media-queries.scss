@@ -1,8 +1,15 @@
 @use "./variables" as *;
 
+// Feature Phones / Very Old Smartphones: up to 360px
+@mixin for-xxxs-screen {
+  @media only screen and (max-width: $screen-xxxs-max) {
+    @content;
+  }
+}
+
 // Extra Small Mobile (Portrait): 320px - 480px
 @mixin for-xxs-screen {
-  @media only screen and (max-width: $screen-xxs-max) {
+  @media only screen and (min-width: $screen-xxs-min) and (max-width: $screen-xxs-max) {
     @content;
   }
 }

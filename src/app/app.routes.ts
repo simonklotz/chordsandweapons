@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: '',
     component: SearchResultComponent,
-    data: { title: $localize`Neueste` },
+    data: { title: 'Latest' },
   },
   {
     path: 'genre/techno',

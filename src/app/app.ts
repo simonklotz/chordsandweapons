@@ -17,7 +17,7 @@ import { NavBarComponent } from './layout/navigation/nav-bar.component';
   ],
   template: `
     <app-header class="app-header">
-      <app-nav-bar></app-nav-bar>
+      <app-nav-bar class="app-nav-bar"></app-nav-bar>
     </app-header>
     <app-main class="app-main">
       <router-outlet></router-outlet>

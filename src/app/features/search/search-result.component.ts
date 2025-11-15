@@ -34,10 +34,10 @@ import { ProductListResponse } from '../../core/models/product-list-response.int
 export class SearchResultComponent {
   readonly search = inject(SearchService);
 
+  products: Signal<ProductListResponse>;
+
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _apiService = inject(ProductApiService);
-
-  products: Signal<ProductListResponse>;
 
   constructor() {
     this.products = toSignal(this._apiService.getProducts(), {

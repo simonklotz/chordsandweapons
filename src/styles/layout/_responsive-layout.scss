@@ -1,0 +1,48 @@
+@use "../abstracts/media-queries" as *;
+
+@mixin responsive-layout {
+  @include for-xxxs-screen {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  @include for-xxs-screen {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  @include for-xs-screen {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  @include for-small-screen {
+    width: calc(100% - 24px);
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  @include for-medium-screen {
+    width: calc(100% - 24px);
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  @include for-large-screen {
+    max-width: 963px;
+    margin: auto;
+  }
+
+  @include for-xl-screen {
+    max-width: 1219px;
+    margin: auto;
+  }
+
+  @include for-xxl-screen {
+    max-width: 1400px;
+    margin: auto;
+  }
+}
