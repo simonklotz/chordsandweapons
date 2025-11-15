@@ -1,23 +1,32 @@
 import { Component, inject, input, OnInit } from '@angular/core';
+import { CurrencyPipe, NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductListItem } from '../../core/models/product-list-item.interface';
-import { CurrencyPipe } from '@angular/common';
+import { AudioPlayerService } from '../../features/audio-player/audio-player.service';
 
 @Component({
   selector: 'app-product-tile',
   standalone: true,
   template: `
-    <div class="product-tile__wrapper">
-      <img
-        tabindex="0"
+    <div
+      tabindex="0"
+      class="product-tile__wrapper"
+      (click)="openDetailView()"
+      (keydown.enter)="openDetailView()"
+      (keydown.space)="openDetailView()"
+    >
+      <div
         class="product-image"
-        [src]="imageUrl"
-        [alt]="altText"
-        width="100%"
-        (click)="openDetailView()"
-        (keydown.enter)="openDetailView()"
-        (keydown.space)="openDetailView()"
-      />
+        [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+      >
+        <div
+          tabindex="0"
+          class="play-button"
+          (click)="play($event)"
+          (keydown.enter)="play($event)"
+          (keydown.space)="play($event)"
+        ></div>
+      </div>
       <div class="product-info">
         <h3 class="product-info__title">
           {{ product().title }}
@@ -29,15 +38,16 @@ import { CurrencyPipe } from '@angular/common';
       </div>
     </div>
   `,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, NgStyle],
 })
 export class ProductTileComponent implements OnInit {
   readonly product = input.required<ProductListItem>();
 
   private readonly _router = inject(Router);
+  private readonly _audioPlayer = inject(AudioPlayerService);
 
   get imageUrl(): string {
-    return this.product().imageUrl ?? 'images/fallback-artwork.jpg';
+    return this.product().imageUrl ?? 'assets/images/fallback-artwork.jpg';
   }
 
   get altText(): string {
@@ -54,10 +64,19 @@ export class ProductTileComponent implements OnInit {
 
   ngOnInit() {
     console.log('Product', this.product());
-    console.log('Price', this.product().price);
   }
 
   openDetailView(): void {
     this._router.navigate(['release', this.product().id]);
+  }
+
+  play(event: Event): void {
+    event.stopPropagation();
+
+    this._audioPlayer.loadPlaylist(
+      this.product().trackList,
+      0,
+      this.product().imageUrl,
+    );
   }
 }

@@ -1,7 +1,7 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/media-queries" as *;
 
-.product-tile {
+.app-product-tile {
   @include for-xxxs-screen {
     width: 100%;
     margin-bottom: 16px;
@@ -77,7 +77,47 @@
     }
   }
 
-  .product-image {
+  .product-tile__wrapper {
     cursor: pointer;
+    background-color: $color-white;
+    border: 1px solid $color-black;
+    border-radius: 6px;
+
+    .product-image {
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      aspect-ratio: 1/1;
+      display: block;
+      background-size: cover;
+      background-position: center;
+      border-radius: 5px 5px 0 0;
+      border-bottom: 1px solid $color-black;
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 1px solid $color-black;
+        border-radius: 50%;
+        background-color: $color-white;
+        background-image: url(../../assets/icons/play_24dp_black.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        transition:
+          background-color 0.2s ease,
+          background-image 0.2s ease;
+
+        &:hover {
+          opacity: 1;
+          background-color: $color-black;
+          background-image: url(../../assets/icons/play_24dp_white.svg);
+        }
+      }
+    }
   }
 }

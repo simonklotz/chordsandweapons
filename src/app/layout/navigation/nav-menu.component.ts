@@ -28,7 +28,7 @@ import { NgOptimizedImage } from '@angular/common';
       <span class="nav-menu__icon-wrapper">
         <img
           class="nav__icon"
-          ngSrc="icons/keyboard_arrow_down_32dp.svg"
+          ngSrc="assets/icons/keyboard_arrow_down_32dp.svg"
           alt="menu open indicator"
           height="32"
           width="32"
