@@ -4,34 +4,60 @@
 .product-detail-wrapper {
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    "artwork"
+    "heading"
+    "price"
+    "cart"
+    "tracks"
+    "description";
   gap: 24px;
-
   width: 100%;
   max-width: 564px;
   margin: auto;
-
   padding: 15px 15px 28px;
 
   @include for-large-screen {
     grid-template-columns: auto 500px;
+    grid-template-areas:
+      "artwork heading"
+      "artwork price"
+      "artwork cart"
+      "artwork tracks"
+      "description description";
+
     max-width: 1088px;
     padding: 36px 32px 36px;
   }
 
   @include for-xl-screen {
     grid-template-columns: auto 550px;
+    grid-template-areas:
+      "artwork heading"
+      "artwork price"
+      "artwork cart"
+      "artwork tracks"
+      "description description";
+
     max-width: 1188px;
     padding: 36px 32px 36px;
   }
 
   @include for-xxl-screen {
     grid-template-columns: auto 600px;
+    grid-template-areas:
+      "artwork heading"
+      "artwork price"
+      "artwork cart"
+      "artwork tracks"
+      "description description";
+
     max-width: 1288px;
     padding: 36px 32px 36px;
   }
 
   .product-artwork {
-    grid-column: 1;
+    grid-area: artwork;
 
     &__img {
       width: 100%;
@@ -40,16 +66,16 @@
     }
   }
 
-  .product-info {
-    grid-column: 1;
+  .product-heading {
+    grid-area: heading;
+  }
 
-    @media (min-width: $screen-lg-min) {
-      grid-column: 2;
-    }
+  .product-price {
+    grid-area: price;
+  }
 
-    &-item {
-      margin-bottom: 16px;
-    }
+  .product-add-to-cart {
+    grid-area: cart;
 
     .add-to-cart-form {
       &__quantity {
@@ -74,5 +100,32 @@
         }
       }
     }
+  }
+
+  .product-tracklist {
+    grid-area: tracks;
+
+    &__heading {
+      margin-bottom: 8px;
+    }
+
+    &__list {
+      list-style: none;
+
+      &-item {
+        cursor: pointer;
+        padding: 8px;
+        border-bottom: 1px solid lightgray;
+
+        &:hover {
+          color: $color-white;
+          background-color: $color-black;
+        }
+      }
+    }
+  }
+
+  .product-description {
+    grid-area: description;
   }
 }
