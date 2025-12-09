@@ -1,11 +1,11 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../core/models/product.interface';
 import { CurrencyPipe } from '@angular/common';
-import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { Product } from '../../core/models/product.interface';
 import { Track } from '../../core/models/track.interface';
+import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
 import { AudioPlayerService } from '../audio-player/audio-player.service';
 
 @Component({
@@ -13,6 +13,11 @@ import { AudioPlayerService } from '../audio-player/audio-player.service';
   standalone: true,
   template: `
     <div class="product-detail-wrapper">
+      <div class="grid-item product-heading">
+        <h2>{{ product.artist }}</h2>
+        <h3>{{ product.title }}</h3>
+      </div>
+
       <div class="grid-item product-artwork">
         <img
           class="product-artwork__img"
@@ -20,49 +25,52 @@ import { AudioPlayerService } from '../audio-player/audio-player.service';
           [alt]="altText"
         />
       </div>
-      <div class="grid-item product-heading">
-        <h2>{{ product.artist }} - {{ product.title }}</h2>
-      </div>
-      <div class="grid-item product-price">
-        <strong>{{ price | currency: currencyCode }}</strong>
-      </div>
-      <div class="grid-item product-add-to-cart">
-        <form
-          class="product-info-item add-to-cart-form"
-          [formGroup]="addToCartForm"
-          (ngSubmit)="addToCart()"
-          role="form"
-          aria-label="Add to cart"
-        >
-          <app-quantity-input
-            class="add-to-cart-form__quantity"
-            formControlName="quantity"
-            [decrease]="decreaseQuantity"
-            [increase]="increaseQuantity"
-          ></app-quantity-input>
-          <button class="button add-to-cart-form__submit" type="submit">
-            Add to cart
-          </button>
-        </form>
-      </div>
-      <div class="grid-item product-tracklist">
-        <h3 class="product-tracklist__heading">Tracklist</h3>
-        <ul class="product-tracklist__list">
-          @for (track of product.trackList; track track.position) {
-            <li
-              tabindex="0"
-              class="product-tracklist__list-item"
-              (click)="playTrack(track)"
-              (keydown.enter)="playTrack(track)"
-              (keydown.space)="playTrack(track)"
-            >
-              {{ track.title }}
-            </li>
-          }
-        </ul>
-      </div>
+
       <div class="grid-item product-description">
         <p>{{ product.description }}</p>
+      </div>
+
+      <div class="product-actions">
+        <div class="grid-item product-price">
+          <strong>{{ price | currency: currencyCode }}</strong>
+        </div>
+
+        <div class="grid-item product-add-to-cart">
+          <form
+            class="product-info-item add-to-cart-form"
+            [formGroup]="addToCartForm"
+            (ngSubmit)="addToCart()"
+            role="form"
+            aria-label="Add to cart"
+          >
+            <app-quantity-input
+              class="add-to-cart-form__quantity"
+              formControlName="quantity"
+              [decrease]="decreaseQuantity"
+              [increase]="increaseQuantity"
+            ></app-quantity-input>
+            <button class="button add-to-cart-form__submit" type="submit">
+              Add to cart
+            </button>
+          </form>
+        </div>
+
+        <div class="grid-item product-tracklist">
+          <h3 class="product-tracklist__heading">Tracklist</h3>
+          <ul class="product-tracklist__list">
+            @for (track of product.trackList; track track.position) {
+              <li
+                tabindex="0"
+                class="product-tracklist__list-item"
+                (click)="playTrack(track)"
+                (keydown.enter)="playTrack(track)"
+                (keydown.space)="playTrack(track)"
+              >
+                {{ track.title }}
+              </li>
+            }
+          </ul>
+        </div>
       </div>
     </div>
   `,

@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/media-queries" as *;
+@use "../layout/responsive-layout" as *;
 
 .product-detail-wrapper {
   display: grid;
@@ -7,53 +8,41 @@
   grid-template-areas:
     "artwork"
     "heading"
-    "price"
-    "cart"
-    "tracks"
+    "actions"
     "description";
-  gap: 24px;
-  width: 100%;
-  max-width: 564px;
-  margin: auto;
-  padding: 15px 15px 28px;
+  margin-top: 16px;
+
+  @include responsive-layout();
 
   @include for-large-screen {
-    grid-template-columns: auto 500px;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "artwork heading"
-      "artwork price"
-      "artwork cart"
-      "artwork tracks"
-      "description description";
-
-    max-width: 1088px;
-    padding: 36px 32px 36px;
+      "artwork heading actions"
+      "artwork description actions";
+    gap: 0 36px;
+    margin-top: 16px;
   }
 
   @include for-xl-screen {
-    grid-template-columns: auto 550px;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "artwork heading"
-      "artwork price"
-      "artwork cart"
-      "artwork tracks"
-      "description description";
-
-    max-width: 1188px;
-    padding: 36px 32px 36px;
+      "artwork heading actions"
+      "artwork description actions";
+    gap: 0 36px;
+    margin-top: 16px;
   }
 
   @include for-xxl-screen {
-    grid-template-columns: auto 600px;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "artwork heading"
-      "artwork price"
-      "artwork cart"
-      "artwork tracks"
-      "description description";
+      "artwork heading actions"
+      "artwork description actions";
+    gap: 0 36px;
+    margin-top: 16px;
+  }
 
-    max-width: 1288px;
-    padding: 36px 32px 36px;
+  .grid-item {
+    margin-bottom: 16px;
   }
 
   .product-artwork {
@@ -70,62 +59,61 @@
     grid-area: heading;
   }
 
-  .product-price {
-    grid-area: price;
-  }
-
-  .product-add-to-cart {
-    grid-area: cart;
-
-    .add-to-cart-form {
-      &__quantity {
-        width: 100%;
-      }
-
-      &__submit {
-        width: 100%;
-        height: 48px;
-        margin-top: 16px;
-
-        font-family: "Source Code Pro Regular", monospace;
-        font-size: 1.8rem;
-
-        color: $color-white;
-        background-color: $color-black;
-        border: 2px solid $color-black;
-
-        &:hover {
-          color: $color-black;
-          background-color: $color-white;
-        }
-      }
-    }
-  }
-
-  .product-tracklist {
-    grid-area: tracks;
-
-    &__heading {
-      margin-bottom: 8px;
-    }
-
-    &__list {
-      list-style: none;
-
-      &-item {
-        cursor: pointer;
-        padding: 8px;
-        border-bottom: 1px solid lightgray;
-
-        &:hover {
-          color: $color-white;
-          background-color: $color-black;
-        }
-      }
-    }
-  }
-
   .product-description {
     grid-area: description;
+  }
+
+  .product-actions {
+    grid-area: actions;
+
+    .product-price {
+    }
+
+    .product-add-to-cart {
+      .add-to-cart-form {
+        &__quantity {
+          width: 100%;
+        }
+
+        &__submit {
+          width: 100%;
+          height: 48px;
+          margin-top: 16px;
+
+          font-family: "Source Code Pro Regular", monospace;
+          font-size: 1.8rem;
+
+          color: $color-white;
+          background-color: $color-black;
+          border: 2px solid $color-black;
+
+          &:hover {
+            color: $color-black;
+            background-color: $color-white;
+          }
+        }
+      }
+    }
+
+    .product-tracklist {
+      &__heading {
+        margin-bottom: 8px;
+      }
+
+      &__list {
+        list-style: none;
+
+        &-item {
+          cursor: pointer;
+          padding: 8px;
+          border-bottom: 1px solid lightgray;
+
+          &:hover {
+            color: $color-white;
+            background-color: $color-black;
+          }
+        }
+      }
+    }
   }
 }
