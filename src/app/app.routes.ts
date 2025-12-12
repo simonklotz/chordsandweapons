@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { SearchResultComponent } from './features/search/search-result.component';
-import { CartComponent } from './features/cart/cart.component';
 import { ContactComponent } from './layout/pages/contact.component';
 import { ImpressumComponent } from './layout/pages/impressum.component';
 import { productResolver } from './features/product/product.resolver';
@@ -53,9 +52,5 @@ export const routes: Routes = [
   {
     path: 'impressum',
     component: ImpressumComponent,
-  },
-  {
-    path: 'cart',
-    component: CartComponent,
   },
 ];

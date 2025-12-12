@@ -6,6 +6,7 @@ import { genreMenuConfig } from './configs/genre-menu-config';
 import { moreMenuConfig } from './configs/more-menu-config';
 import { NavMenuComponent } from './nav-menu.component';
 import { NavMenu } from './nav-menu.interface';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -43,29 +44,38 @@ import { NavMenu } from './nav-menu.interface';
             width="32"
           />
         </li>
-        <li class="nav__item">
-          <a class="nav__link" routerLink="/cart">
-            <img
-              ngSrc="assets/icons/shopping_cart_32dp.svg"
-              alt="Warenkorb"
-              i18n-title
-              title="Warenkorb"
-              height="32"
-              width="32"
-            />
-          </a>
+        <li
+          class="nav__item"
+          tabindex="0"
+          (click)="onCart()"
+          (keydown.enter)="onCart()"
+          (keydown.space)="onCart()"
+        >
+          <img
+            ngSrc="assets/icons/shopping_cart_32dp.svg"
+            alt="Warenkorb"
+            i18n-title
+            title="Warenkorb"
+            height="32"
+            width="32"
+          />
         </li>
       </ul>
     </nav>
   `,
 })
 export class NavBarComponent {
+  private readonly _searchService = inject(SearchService);
+  private readonly _cartService = inject(CartService);
+
   genreMenu: NavMenu = genreMenuConfig;
   moreMenu: NavMenu = moreMenuConfig;
 
-  private readonly _searchService = inject(SearchService);
-
   onSearch(): void {
     this._searchService.onSearch();
+  }
+
+  onCart(): void {
+    this._cartService.openPanel();
   }
 }

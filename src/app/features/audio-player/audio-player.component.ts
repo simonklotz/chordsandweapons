@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { AudioPlayerService } from './audio-player.service';
+import { CurrencyPipe } from '@angular/common';
+import { CartService } from '../../core/services/cart.service';
+import { CartButtonComponent } from '../../shared/buttons/cart-button.component';
 import { PreviousButtonComponent } from './components/previous-button.component';
 import { NextButtonComponent } from './components/next-button.component';
 import { PlayButtonComponent } from './components/play-button.component';
-import { CurrencyPipe } from '@angular/common';
-import { CartButtonComponent } from '../../shared/buttons/cart-button.component';
+import { AudioPlayerService } from './audio-player.service';
+import { ProductApiService } from '../../core/services/product-api.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -55,7 +57,13 @@ import { CartButtonComponent } from '../../shared/buttons/cart-button.component'
           ></progress>
         }
 
-        <div class="audio-player__add-to-cart">
+        <div
+          tabindex="0"
+          class="audio-player__add-to-cart"
+          (click)="addToCart()"
+          (keydown.enter)="addToCart()"
+          (keydown.space)="addToCart()"
+        >
           <app-cart-button></app-cart-button>
           <div class="audio-player__product-price">
             {{ price | currency: currencyCode : true }}
@@ -66,6 +74,9 @@ import { CartButtonComponent } from '../../shared/buttons/cart-button.component'
   `,
 })
 export class AudioPlayerComponent {
+  private readonly _cartService = inject(CartService);
+  private readonly _productApiService = inject(ProductApiService);
+
   readonly audioPlayer = inject(AudioPlayerService);
 
   get price(): string | undefined {
@@ -74,5 +85,19 @@ export class AudioPlayerComponent {
 
   get currencyCode(): string | undefined {
     return this.audioPlayer.playlist()?.productPrice.currencyCode;
+  }
+
+  get productId(): number | undefined {
+    return this.audioPlayer.playlist()?.productId;
+  }
+
+  addToCart(): void {
+    if (!this.productId) {
+      return;
+    }
+
+    this._productApiService
+      .getProduct(this.productId)
+      .subscribe((product) => this._cartService.addItem(product, 1));
   }
 }

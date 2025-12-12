@@ -5,6 +5,7 @@ import { MainComponent } from './layout/main.component';
 import { FooterComponent } from './layout/footer.component';
 import { NavBarComponent } from './layout/navigation/nav-bar.component';
 import { AudioPlayerComponent } from './features/audio-player/audio-player.component';
+import { CartPanelComponent } from './features/cart-panel/cart-panel.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { AudioPlayerComponent } from './features/audio-player/audio-player.compo
     FooterComponent,
     NavBarComponent,
     AudioPlayerComponent,
+    CartPanelComponent,
   ],
   template: `
     <app-header class="app-header">
@@ -26,6 +28,7 @@ import { AudioPlayerComponent } from './features/audio-player/audio-player.compo
     </app-main>
     <app-footer class="app-footer"><h1 class="h1">Footer</h1></app-footer>
     <app-audio-player></app-audio-player>
+    <app-cart-panel></app-cart-panel>
   `,
 })
 export class App {}

@@ -7,6 +7,7 @@ import { Product } from '../../core/models/product.interface';
 import { Track } from '../../core/models/track.interface';
 import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
 import { AudioPlayerService } from '../audio-player/audio-player.service';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -79,6 +80,7 @@ import { AudioPlayerService } from '../audio-player/audio-player.service';
 export class ProductDetailComponent implements OnInit {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _audioPlayerService = inject(AudioPlayerService);
+  private readonly _cartService = inject(CartService);
 
   decreaseQuantity = new Subject<void>();
   increaseQuantity = new Subject<void>();
@@ -108,7 +110,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(): void {
-    console.log('AddToCart');
+    const quantity = this.addToCartForm.value.quantity ?? 0;
+    if (quantity > 0) {
+      this._cartService.addItem(this.product, quantity);
+    }
   }
 
   @HostListener('window:keydown.-')
