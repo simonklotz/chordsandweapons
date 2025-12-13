@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SearchService } from '../../features/search/search.service';
+import { CartService } from '../../core/services/cart.service';
 import { genreMenuConfig } from './configs/genre-menu-config';
 import { moreMenuConfig } from './configs/more-menu-config';
 import { NavMenuComponent } from './nav-menu.component';
 import { NavMenu } from './nav-menu.interface';
-import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -45,7 +45,7 @@ import { CartService } from '../../core/services/cart.service';
           />
         </li>
         <li
-          class="nav__item"
+          class="nav__item nav__item--cart"
           tabindex="0"
           (click)="onCart()"
           (keydown.enter)="onCart()"
@@ -59,6 +59,9 @@ import { CartService } from '../../core/services/cart.service';
             height="32"
             width="32"
           />
+          @if (cartItemCount > 0) {
+            <span class="cart-count-indicator">{{ cartItemCount }}</span>
+          }
         </li>
       </ul>
     </nav>
@@ -70,6 +73,10 @@ export class NavBarComponent {
 
   genreMenu: NavMenu = genreMenuConfig;
   moreMenu: NavMenu = moreMenuConfig;
+
+  get cartItemCount(): number {
+    return this._cartService.itemCount();
+  }
 
   onSearch(): void {
     this._searchService.onSearch();
