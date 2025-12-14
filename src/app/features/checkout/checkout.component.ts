@@ -287,7 +287,7 @@ import { CartService } from '../../core/services/cart.service';
               <div class="order-item">
                 <div class="order-item__image-wrapper">
                   <img
-                    [src]="item.product.imageUrl"
+                    [src]="item.product.images[0]"
                     [alt]="item.product.title"
                     class="order-item__image"
                   />

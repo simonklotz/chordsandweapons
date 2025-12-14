@@ -7,7 +7,7 @@ export interface ProductListItem {
   title: string;
   artist: string;
   price: Price;
-  imageUrl: string;
+  images: string[];
   inventoryStatus: InventoryStatus;
   trackList: Track[];
 }

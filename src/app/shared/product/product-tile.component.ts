@@ -74,7 +74,7 @@ export class ProductTileComponent implements OnInit {
   );
 
   get imageUrl(): string {
-    return this.product().imageUrl ?? 'assets/images/fallback-artwork.jpg';
+    return this.product().images[0] ?? 'assets/images/fallback-artwork.jpg';
   }
 
   get altText(): string {
@@ -111,7 +111,7 @@ export class ProductTileComponent implements OnInit {
       this._audioPlayer.loadPlaylist(
         this.product().id,
         this.product().trackList,
-        this.product().imageUrl,
+        this.product().images[0],
         this.product().price,
         0,
       );

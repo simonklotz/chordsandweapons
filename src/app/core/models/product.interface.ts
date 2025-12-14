@@ -6,13 +6,14 @@ export interface Product {
   id: number;
   title: string;
   artist: string;
-  description: string;
   price: Price;
-  imageUrl: string;
-  inventoryStatus: InventoryStatus;
+  images: string[];
+  description: string;
   totalInventory: number;
+  inventoryStatus: InventoryStatus;
   trackList: Track[];
   genre: string[];
+  format: string;
   label: string;
   releaseDate: string;
 }

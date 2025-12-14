@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductListResponse } from '../models/product-list-response.interface';
 import { Product } from '../models/product.interface';
 
@@ -13,18 +13,10 @@ export class ProductApiService {
   private readonly _http = inject(HttpClient);
 
   getProducts(): Observable<ProductListResponse> {
-    return this._http
-      .get<ProductListResponse>(this.BASE_URL + '/products')
-      .pipe(
-        tap((result) => {
-          console.log('getProducts result', result);
-        }),
-      );
+    return this._http.get<ProductListResponse>(this.BASE_URL + '/products');
   }
 
   getProduct(id: number): Observable<Product> {
-    return this._http
-      .get<Product>(this.BASE_URL + `/products/${id}`)
-      .pipe(tap((result) => console.log('getProduct result', result)));
+    return this._http.get<Product>(this.BASE_URL + `/products/${id}`);
   }
 }

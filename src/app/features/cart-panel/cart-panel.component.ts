@@ -59,7 +59,7 @@ import { CartItem } from '../../core/models/cart-item.interface';
                 @for (item of cartService.items(); track item.product.id) {
                   <li class="cart-item">
                     <img
-                      [src]="item.product.imageUrl"
+                      [src]="item.product.images[0]"
                       [alt]="item.product.title"
                       class="cart-item__image"
                     />
