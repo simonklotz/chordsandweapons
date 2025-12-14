@@ -1,6 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { CartItem } from '../models/cart-item.interface';
 import { Product } from '../models/product.interface';
+import { ProductListItem } from '../models/product-list-item.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -26,7 +27,7 @@ export class CartService {
     return firstItem ? firstItem.product.price.currencyCode : 'EUR';
   });
 
-  addItem(product: Product, quantity: number): void {
+  addItem(product: Product | ProductListItem, quantity: number): void {
     if (quantity <= 0) return;
 
     const currentItems = this._items();

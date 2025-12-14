@@ -2,6 +2,7 @@ import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductListItem } from '../../core/models/product-list-item.interface';
+import { CartService } from '../../core/services/cart.service';
 import { AudioPlayerService } from '../../features/audio-player/audio-player.service';
 import { PlayButtonComponent } from '../../features/audio-player/components/play-button.component';
 
@@ -46,7 +47,11 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
           </p>
         </div>
         <div class="product-actions">
-          <button class="product-actions__add-to-cart" type="button">
+          <button
+            class="product-actions__add-to-cart"
+            type="button"
+            (click)="addToCart()"
+          >
             Add to cart
           </button>
         </div>
@@ -57,14 +62,15 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
 })
 export class ProductTileComponent implements OnInit {
   private readonly _router = inject(Router);
+  private readonly _audioPlayer = inject(AudioPlayerService);
+  private readonly _cartService = inject(CartService);
 
   readonly product = input.required<ProductListItem>();
-  readonly audioPlayer = inject(AudioPlayerService);
 
   readonly isPlaying = computed(
     () =>
-      this.audioPlayer.isPlaying() &&
-      this.audioPlayer.playlist()?.productId === this.product().id,
+      this._audioPlayer.isPlaying() &&
+      this._audioPlayer.playlist()?.productId === this.product().id,
   );
 
   get imageUrl(): string {
@@ -99,20 +105,24 @@ export class ProductTileComponent implements OnInit {
     event.stopPropagation();
 
     if (
-      !this.audioPlayer.playlist() ||
-      this.audioPlayer.playlist()?.productId !== this.product().id
+      !this._audioPlayer.playlist() ||
+      this._audioPlayer.playlist()?.productId !== this.product().id
     ) {
-      this.audioPlayer.loadPlaylist(
+      this._audioPlayer.loadPlaylist(
         this.product().id,
         this.product().trackList,
         this.product().imageUrl,
         this.product().price,
         0,
       );
-    } else if (this.audioPlayer.isPlaying()) {
-      this.audioPlayer.pause();
+    } else if (this._audioPlayer.isPlaying()) {
+      this._audioPlayer.pause();
     } else {
-      this.audioPlayer.play();
+      this._audioPlayer.play();
     }
+  }
+
+  addToCart(): void {
+    this._cartService.addItem(this.product(), 1);
   }
 }
