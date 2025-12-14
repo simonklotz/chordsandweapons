@@ -9,33 +9,46 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
   selector: 'app-product-tile',
   standalone: true,
   template: `
-    <div
-      tabindex="0"
-      class="product-tile__wrapper"
-      (click)="openDetailView()"
-      (keydown.enter)="openDetailView()"
-      (keydown.space)="openDetailView()"
-    >
+    <div class="product-tile">
       <div
-        class="product-image"
-        [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+        tabindex="0"
+        class="product-tile__image"
+        (click)="openDetailView()"
+        (keydown.enter)="openDetailView()"
+        (keydown.space)="openDetailView()"
       >
-        <div class="product-image-overlay"></div>
-        @if (hasTrackPreview) {
-          <app-play-button
-            [isPlaying]="isPlaying()"
-            [opticalSize]="30"
-            (clicked)="togglePlayPause($event)"
-          ></app-play-button>
-        }
+        <div
+          class="product-image"
+          [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+        >
+          <div class="product-image-overlay"></div>
+          @if (hasTrackPreview) {
+            <app-play-button
+              [isPlaying]="isPlaying()"
+              [opticalSize]="30"
+              (clicked)="togglePlayPause($event)"
+            ></app-play-button>
+          }
+        </div>
       </div>
-      <div class="product-info">
-        <h3 class="product-info__title">
-          {{ product().title }}
-        </h3>
-        <h4 class="product-info__artist">{{ product().artist }}</h4>
-        <div>
-          <span>{{ price | currency: currencyCode : true }}</span>
+      <div class="product-tile__body">
+        <div
+          class="product-info"
+          tabindex="0"
+          (click)="openDetailView()"
+          (keydown.enter)="openDetailView()"
+          (keydown.space)="openDetailView()"
+        >
+          <h3 class="product-info__title">{{ product().title }}</h3>
+          <p class="product-info__artist">{{ product().artist }}</p>
+          <p class="product-info__price">
+            {{ price | currency: currencyCode }}
+          </p>
+        </div>
+        <div class="product-actions">
+          <button class="product-actions__add-to-cart" type="button">
+            Add to cart
+          </button>
         </div>
       </div>
     </div>
