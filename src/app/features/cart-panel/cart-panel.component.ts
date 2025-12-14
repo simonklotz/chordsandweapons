@@ -6,6 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { CartItem } from '../../core/models/cart-item.interface';
 
@@ -96,7 +97,11 @@ import { CartItem } from '../../core/models/cart-item.interface';
                   {{ formatSubtotal() }}
                 </span>
               </div>
-              <button class="cart-panel__checkout button" type="button">
+              <button
+                class="cart-panel__checkout button"
+                type="button"
+                (click)="goToCheckout()"
+              >
                 Checkout
               </button>
             </div>
@@ -108,6 +113,7 @@ import { CartItem } from '../../core/models/cart-item.interface';
 })
 export class CartPanelComponent {
   private readonly elementRef = inject(ElementRef);
+  private readonly router = inject(Router);
 
   readonly cartService = inject(CartService);
 
@@ -165,5 +171,10 @@ export class CartPanelComponent {
       style: 'currency',
       currency: currencyCode,
     }).format(amount);
+  }
+
+  goToCheckout(): void {
+    this.closePanel();
+    this.router.navigate(['/checkout']);
   }
 }
