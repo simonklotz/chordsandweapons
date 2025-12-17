@@ -79,7 +79,7 @@ export class NavBarComponent {
   }
 
   onSearch(): void {
-    this._searchService.onSearch();
+    this._searchService.openSearchDialog();
   }
 
   onCart(): void {

@@ -8,27 +8,27 @@ export const routes: Routes = [
   {
     path: '',
     component: SearchResultComponent,
-    data: { title: 'Latest' },
+    data: { title: 'Latest', filter: 'latest' },
   },
   {
     path: 'genre/techno',
     component: SearchResultComponent,
-    data: { title: 'Techno' },
+    data: { title: 'Techno', filter: 'techno' },
   },
   {
     path: 'genre/house',
     component: SearchResultComponent,
-    data: { title: 'House' },
+    data: { title: 'House', filter: 'house' },
   },
   {
     path: 'genre/electro',
     component: SearchResultComponent,
-    data: { title: 'Electro' },
+    data: { title: 'Electro', filter: 'electro' },
   },
   {
     path: 'genre/breaks',
     component: SearchResultComponent,
-    data: { title: 'Breaks' },
+    data: { title: 'Breaks', filter: 'breaks' },
   },
   {
     path: 'search',

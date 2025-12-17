@@ -50,7 +50,7 @@ export class SearchComponent {
   private readonly _dialogRef = inject(DialogRef<string>);
 
   form = this._formBuilder.group({
-    search: ['', [Validators.required]],
+    search: ['', [Validators.required, Validators.minLength(2)]],
   });
 
   onSubmit(): void {

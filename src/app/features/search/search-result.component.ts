@@ -1,27 +1,31 @@
-import { Component, inject, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductApiService } from '../../core/services/product-api.service';
 import { ProductTileComponent } from '../../shared/product/product-tile.component';
 import { RouteData } from './models/route-data.interface';
 import { SearchService } from './search.service';
+import { merge, Observable, of } from 'rxjs';
+import { ProductListItem } from '../../core/models/product-list-item.interface';
+import { PageInfo } from './models/page-info.interface';
 import { ProductListResponse } from '../../core/models/product-list-response.interface';
+import { filterValidQueries } from './helpers/filter-valid-queries.helper';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-search-result',
   standalone: true,
-  imports: [ProductTileComponent],
+  imports: [ProductTileComponent, AsyncPipe],
   template: `
     <div class="search-result">
-      @if (title === 'Search result' && search.query()) {
+      @if (title === 'Search result') {
         <h1 class="search-result__title h1">
-          {{ title }}: {{ search.query() }}
+          {{ title }}: {{ query$ | async }}
         </h1>
       } @else {
         <h1 class="search-result__title h1">{{ title }}</h1>
       }
       <div class="search-result__wrapper">
-        @for (product of products().products; track product) {
+        @for (product of products(); track product) {
           <app-product-tile
             [product]="product"
             class="app-product-tile"
@@ -31,25 +35,19 @@ import { ProductListResponse } from '../../core/models/product-list-response.int
     </div>
   `,
 })
-export class SearchResultComponent {
-  readonly search = inject(SearchService);
-
-  products: Signal<ProductListResponse>;
-
+export class SearchResultComponent implements OnInit {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _apiService = inject(ProductApiService);
+  private readonly _searchService = inject(SearchService);
 
-  constructor() {
-    this.products = toSignal(this._apiService.getProducts(), {
-      initialValue: {
-        products: [],
-        total: 0,
-        page: 0,
-        limit: 0,
-        hasNextPage: false,
-      },
-    });
-  }
+  query$ = this._searchService.query$.pipe(filterValidQueries());
+  products = signal<ProductListItem[]>([]);
+  pageInfo = signal<PageInfo>({
+    total: 0,
+    page: 0,
+    limit: 0,
+    hasNextPage: false,
+  });
 
   get routeSnapshotData(): RouteData {
     return this._activatedRoute.snapshot.data as RouteData;
@@ -57,5 +55,39 @@ export class SearchResultComponent {
 
   get title(): string {
     return this.routeSnapshotData.title;
+  }
+
+  get filter(): string {
+    return this.routeSnapshotData.filter;
+  }
+
+  ngOnInit(): void {
+    merge(this._searchService.searchResult$, this.fetchProducts()).subscribe(
+      (result) => {
+        this.products.set(result.products);
+        this.pageInfo.set({
+          ...result,
+        });
+      },
+    );
+  }
+
+  private fetchProducts(): Observable<ProductListResponse> {
+    switch (this.filter) {
+      case 'latest':
+        return this._apiService.getProducts();
+      case 'techno':
+      case 'house':
+      case 'electro':
+      case 'breaks':
+      default:
+        return of({
+          products: [],
+          total: 0,
+          page: 0,
+          limit: 0,
+          hasNextPage: false,
+        });
+    }
   }
 }

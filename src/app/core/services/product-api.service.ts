@@ -16,6 +16,15 @@ export class ProductApiService {
     return this._http.get<ProductListResponse>(this.BASE_URL + '/products');
   }
 
+  searchProducts(searchQuery: string): Observable<ProductListResponse> {
+    return this._http.get<ProductListResponse>(
+      this.BASE_URL + '/products/search',
+      {
+        params: { q: searchQuery },
+      },
+    );
+  }
+
   getProduct(id: number): Observable<Product> {
     return this._http.get<Product>(this.BASE_URL + `/products/${id}`);
   }
