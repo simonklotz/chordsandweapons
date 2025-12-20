@@ -38,7 +38,6 @@ import { NavMenu } from './nav-menu.interface';
             class="nav__icon"
             ngSrc="assets/icons/search_32dp.svg"
             alt="suche"
-            i18n-title
             title="Suche"
             height="32"
             width="32"
@@ -54,7 +53,6 @@ import { NavMenu } from './nav-menu.interface';
           <img
             ngSrc="assets/icons/shopping_cart_32dp.svg"
             alt="Warenkorb"
-            i18n-title
             title="Warenkorb"
             height="32"
             width="32"
