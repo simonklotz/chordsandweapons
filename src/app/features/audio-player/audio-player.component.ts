@@ -7,6 +7,7 @@ import { NextButtonComponent } from './components/next-button.component';
 import { PlayButtonComponent } from './components/play-button.component';
 import { AudioPlayerService } from './audio-player.service';
 import { numberToCurrency } from '../../shared/helpers/number-to-currency';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-audio-player',
@@ -17,11 +18,15 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
       <div class="audio-player">
         @if (audioPlayer.currentArtwork(); as artwork) {
           <img
+            tabindex="0"
             class="audio-player__artwork"
             [src]="artwork"
             alt="artwork"
             width="50px"
             height="50px"
+            (click)="navigateToDetailView()"
+            (keydown.enter)="navigateToDetailView()"
+            (keydown.space)="navigateToDetailView()"
           />
         }
 
@@ -38,7 +43,13 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
           (clicked)="audioPlayer.next()"
         ></app-next-button>
 
-        <div class="audio-player__track-info">
+        <div
+          tabindex="0"
+          class="audio-player__track-info"
+          (click)="navigateToDetailView()"
+          (keydown.enter)="navigateToDetailView()"
+          (keydown.space)="navigateToDetailView()"
+        >
           {{ track.position }}/{{ audioPlayer.playlist()?.tracks?.length }}
           {{ track.title }}
         </div>
@@ -68,6 +79,7 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
   `,
 })
 export class AudioPlayerComponent {
+  private readonly _router = inject(Router);
   private readonly _cartService = inject(CartService);
   private readonly _productApiService = inject(ProductApiService);
 
@@ -83,6 +95,13 @@ export class AudioPlayerComponent {
 
   get productId(): number | undefined {
     return this.audioPlayer.playlist()?.productId;
+  }
+
+  navigateToDetailView(): void {
+    if (!this.productId) {
+      return;
+    }
+    this._router.navigate(['release', this.productId]);
   }
 
   addToCart(): void {

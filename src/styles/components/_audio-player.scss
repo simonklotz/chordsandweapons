@@ -1,5 +1,5 @@
-@use "../abstracts/variables" as *;
-@use "../abstracts/media-queries" as *;
+@use '../abstracts/variables' as *;
+@use '../abstracts/media-queries' as *;
 
 .audio-player {
   position: fixed;
@@ -20,6 +20,7 @@
   // justify-content: center;
 
   &__artwork {
+    cursor: pointer;
     margin-right: 10px;
   }
 
@@ -48,6 +49,7 @@
   }
 
   &__track-info {
+    cursor: pointer;
     flex: 1;
     margin-left: 10px;
     overflow: hidden;
