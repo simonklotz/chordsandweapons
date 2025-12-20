@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormControl,
   FormGroup,
@@ -12,7 +12,7 @@ import { CartService } from '../cart/cart.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="checkout">
       <div class="checkout__container">

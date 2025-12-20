@@ -5,7 +5,7 @@ import {
   HostListener,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
 import { CartItem } from './models/cart-item.interface';
@@ -13,7 +13,7 @@ import { CartItem } from './models/cart-item.interface';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     @if (cartService.isPanelOpen()) {
       <div
