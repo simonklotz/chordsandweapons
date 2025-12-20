@@ -12,10 +12,6 @@ const currencyCodeToSymbol = (currencyCode: string): CurrencyEnum => {
   }
 };
 
-export const numberToCurrency = (
-  value: number,
-  locale = 'de',
-  currencyCode = 'EUR',
-): string => {
+export const numberToCurrency = (value: number, locale = 'de', currencyCode = 'EUR'): string => {
   return formatCurrency(value, locale, currencyCodeToSymbol(currencyCode));
 };

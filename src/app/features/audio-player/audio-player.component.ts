@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { CartButtonComponent } from '../../shared/buttons/cart-button.component';
 import { CartService } from '../cart/cart.service';
 import { ProductApiService } from '../product/product-api.service';
@@ -7,17 +6,12 @@ import { PreviousButtonComponent } from './components/previous-button.component'
 import { NextButtonComponent } from './components/next-button.component';
 import { PlayButtonComponent } from './components/play-button.component';
 import { AudioPlayerService } from './audio-player.service';
+import { numberToCurrency } from '../../shared/helpers/number-to-currency';
 
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [
-    PreviousButtonComponent,
-    NextButtonComponent,
-    PlayButtonComponent,
-    CartButtonComponent,
-    CurrencyPipe,
-  ],
+  imports: [PreviousButtonComponent, NextButtonComponent, PlayButtonComponent, CartButtonComponent],
   template: `
     @if (audioPlayer.currentTrack(); as track) {
       <div class="audio-player">
@@ -66,7 +60,7 @@ import { AudioPlayerService } from './audio-player.service';
         >
           <app-cart-button></app-cart-button>
           <div class="audio-player__product-price">
-            {{ price | currency: currencyCode : true }}
+            {{ price }}
           </div>
         </div>
       </div>
@@ -80,7 +74,7 @@ export class AudioPlayerComponent {
   readonly audioPlayer = inject(AudioPlayerService);
 
   get price(): string | undefined {
-    return this.audioPlayer.playlist()?.productPrice.amount;
+    return numberToCurrency(Number(this.audioPlayer.playlist()?.productPrice.amount));
   }
 
   get currencyCode(): string | undefined {

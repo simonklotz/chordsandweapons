@@ -1,10 +1,11 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { CurrencyPipe, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductListItem } from '../../features/product/product-list/models/product-list-item.interface';
 import { CartService } from '../../features/cart/cart.service';
 import { AudioPlayerService } from '../../features/audio-player/audio-player.service';
 import { PlayButtonComponent } from '../../features/audio-player/components/play-button.component';
+import { numberToCurrency } from '../helpers/number-to-currency';
 
 @Component({
   selector: 'app-product-tile',
@@ -18,10 +19,7 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
         (keydown.enter)="openDetailView()"
         (keydown.space)="openDetailView()"
       >
-        <div
-          class="product-image"
-          [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
-        >
+        <div class="product-image" [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }">
           <div class="product-image-overlay"></div>
           @if (hasTrackPreview) {
             <app-play-button
@@ -43,22 +41,18 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
           <h3 class="product-info__title">{{ product().title }}</h3>
           <p class="product-info__artist">{{ product().artist }}</p>
           <p class="product-info__price">
-            {{ price | currency: currencyCode }}
+            {{ price }}
           </p>
         </div>
         <div class="product-actions">
-          <button
-            class="product-actions__add-to-cart"
-            type="button"
-            (click)="addToCart()"
-          >
+          <button class="product-actions__add-to-cart" type="button" (click)="addToCart()">
             Add to cart
           </button>
         </div>
       </div>
     </div>
   `,
-  imports: [CurrencyPipe, NgStyle, PlayButtonComponent],
+  imports: [NgStyle, PlayButtonComponent],
 })
 export class ProductTileComponent {
   private readonly _router = inject(Router);
@@ -82,7 +76,7 @@ export class ProductTileComponent {
   }
 
   get price(): string {
-    return this.product().price.amount;
+    return numberToCurrency(Number(this.product().price.amount));
   }
 
   get currencyCode(): string {
