@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { CartService } from '../../core/services/cart.service';
 import { CartButtonComponent } from '../../shared/buttons/cart-button.component';
+import { CartService } from '../cart/cart.service';
+import { ProductApiService } from '../product/product-api.service';
 import { PreviousButtonComponent } from './components/previous-button.component';
 import { NextButtonComponent } from './components/next-button.component';
 import { PlayButtonComponent } from './components/play-button.component';
 import { AudioPlayerService } from './audio-player.service';
-import { ProductApiService } from '../../core/services/product-api.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -15,8 +15,8 @@ import { ProductApiService } from '../../core/services/product-api.service';
     PreviousButtonComponent,
     NextButtonComponent,
     PlayButtonComponent,
-    CurrencyPipe,
     CartButtonComponent,
+    CurrencyPipe,
   ],
   template: `
     @if (audioPlayer.currentTrack(); as track) {

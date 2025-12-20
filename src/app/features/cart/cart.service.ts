@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { CartItem } from '../models/cart-item.interface';
-import { Product } from '../models/product.interface';
-import { ProductListItem } from '../models/product-list-item.interface';
+import { CartItem } from './models/cart-item.interface';
+import { Product } from '../product/product-detail/models/product.interface';
+import { ProductListItem } from '../product/product-list/models/product-list-item.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -48,7 +48,7 @@ export class CartService {
       this._items.set([...currentItems, { product, quantity }]);
     }
 
-    // Open the cart-panel panel when item is added
+    // Open the cart panel when item is added
     this.openPanel();
   }
 

@@ -1,8 +1,8 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProductListItem } from '../../core/models/product-list-item.interface';
-import { CartService } from '../../core/services/cart.service';
+import { ProductListItem } from '../../features/product/product-list/models/product-list-item.interface';
+import { CartService } from '../../features/cart/cart.service';
 import { AudioPlayerService } from '../../features/audio-player/audio-player.service';
 import { PlayButtonComponent } from '../../features/audio-player/components/play-button.component';
 
@@ -60,7 +60,7 @@ import { PlayButtonComponent } from '../../features/audio-player/components/play
   `,
   imports: [CurrencyPipe, NgStyle, PlayButtonComponent],
 })
-export class ProductTileComponent implements OnInit {
+export class ProductTileComponent {
   private readonly _router = inject(Router);
   private readonly _audioPlayer = inject(AudioPlayerService);
   private readonly _cartService = inject(CartService);
@@ -91,10 +91,6 @@ export class ProductTileComponent implements OnInit {
 
   get hasTrackPreview(): boolean {
     return this.product().trackList.some((track) => track.previewUrl);
-  }
-
-  ngOnInit() {
-    console.log('Product', this.product());
   }
 
   openDetailView(): void {

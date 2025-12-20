@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, switchMap, tap } from 'rxjs';
-import { ProductApiService } from '../../core/services/product-api.service';
+import { ProductApiService } from '../product/product-api.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { SearchComponent } from './search.component';
 import { filterValidQueries } from './helpers/filter-valid-queries.helper';

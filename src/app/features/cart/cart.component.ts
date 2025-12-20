@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { CartService } from '../../core/services/cart.service';
-import { CartItem } from '../../core/models/cart-item.interface';
+import { CartService } from './cart.service';
+import { CartItem } from './models/cart-item.interface';
 
 @Component({
-  selector: 'app-cart-panel',
+  selector: 'app-cart',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -111,7 +111,7 @@ import { CartItem } from '../../core/models/cart-item.interface';
     }
   `,
 })
-export class CartPanelComponent {
+export class CartComponent {
   private readonly elementRef = inject(ElementRef);
   private readonly router = inject(Router);
 
@@ -123,7 +123,7 @@ export class CartPanelComponent {
       if (this.cartService.isPanelOpen()) {
         setTimeout(() => {
           const closeButton = this.elementRef.nativeElement.querySelector(
-            '.cart-panel-panel__close',
+            '.cart-panel__close',
           ) as HTMLElement;
           closeButton?.focus();
         }, 100);
@@ -166,15 +166,15 @@ export class CartPanelComponent {
     );
   }
 
+  goToCheckout(): void {
+    this.closePanel();
+    this.router.navigate(['/checkout']);
+  }
+
   private formatCurrency(amount: number, currencyCode: string): string {
     return new Intl.NumberFormat('de-DE', {
       style: 'currency',
       currency: currencyCode,
     }).format(amount);
-  }
-
-  goToCheckout(): void {
-    this.closePanel();
-    this.router.navigate(['/checkout']);
   }
 }

@@ -6,10 +6,10 @@ import {
   signal,
 } from '@angular/core';
 import { Howl, Howler } from 'howler';
-import { Track } from '../../core/models/track.interface';
+import { Track } from './models/track.interface';
 import { Playlist } from './models/playlist.interface';
 import { PlaybackState } from './models/playback-state.type';
-import { Price } from '../../core/models/price.interface';
+import { Price } from '../../shared/product/models/price.interface';
 
 @Injectable({
   providedIn: 'root',

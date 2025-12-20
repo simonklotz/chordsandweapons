@@ -1,14 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductApiService } from '../../core/services/product-api.service';
-import { ProductTileComponent } from '../../shared/product/product-tile.component';
+import { ProductApiService } from '../product-api.service';
+import { ProductTileComponent } from '../../../shared/product/product-tile.component';
 import { RouteData } from './models/route-data.interface';
-import { SearchService } from './search.service';
+import { SearchService } from '../../search/search.service';
 import { merge, Observable, of } from 'rxjs';
-import { ProductListItem } from '../../core/models/product-list-item.interface';
+import { ProductListItem } from './models/product-list-item.interface';
 import { PageInfo } from './models/page-info.interface';
-import { ProductListResponse } from '../../core/models/product-list-response.interface';
-import { filterValidQueries } from './helpers/filter-valid-queries.helper';
+import { ProductListResponse } from './models/product-list-response.interface';
+import { filterValidQueries } from '../../search/helpers/filter-valid-queries.helper';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -35,7 +35,7 @@ import { AsyncPipe } from '@angular/common';
     </div>
   `,
 })
-export class SearchResultComponent implements OnInit {
+export class ProductListComponent implements OnInit {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _apiService = inject(ProductApiService);
   private readonly _searchService = inject(SearchService);
@@ -75,7 +75,7 @@ export class SearchResultComponent implements OnInit {
   private fetchProducts(): Observable<ProductListResponse> {
     switch (this.filter) {
       case 'latest':
-        return this._apiService.getProducts();
+        return this._apiService.fetchProducts();
       case 'techno':
       case 'house':
       case 'electro':

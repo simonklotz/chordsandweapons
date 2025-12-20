@@ -1,44 +1,44 @@
 import { Routes } from '@angular/router';
-import { SearchResultComponent } from './features/search/search-result.component';
+import { ProductListComponent } from './features/product/product-list/product-list.component';
 import { ContactComponent } from './layout/pages/contact.component';
 import { ImpressumComponent } from './layout/pages/impressum.component';
-import { productResolver } from './features/product/product.resolver';
+import { productResolver } from './features/product/product-detail/product.resolver';
 
 export const routes: Routes = [
   {
     path: '',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'Latest', filter: 'latest' },
   },
   {
     path: 'genre/techno',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'Techno', filter: 'techno' },
   },
   {
     path: 'genre/house',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'House', filter: 'house' },
   },
   {
     path: 'genre/electro',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'Electro', filter: 'electro' },
   },
   {
     path: 'genre/breaks',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'Breaks', filter: 'breaks' },
   },
   {
     path: 'search',
-    component: SearchResultComponent,
+    component: ProductListComponent,
     data: { title: 'Search result' },
   },
   {
     path: 'release/:id',
     loadComponent: () =>
-      import('./features/product/product-detail.component').then(
+      import('./features/product/product-detail/product-detail.component').then(
         (m) => m.ProductDetailComponent,
       ),
     resolve: {

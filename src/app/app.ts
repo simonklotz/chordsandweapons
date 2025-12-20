@@ -5,7 +5,7 @@ import { MainComponent } from './layout/main.component';
 import { FooterComponent } from './layout/footer.component';
 import { NavBarComponent } from './layout/navigation/nav-bar.component';
 import { AudioPlayerComponent } from './features/audio-player/audio-player.component';
-import { CartPanelComponent } from './features/cart-panel/cart-panel.component';
+import { CartComponent } from './features/cart/cart.component';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ import { CartPanelComponent } from './features/cart-panel/cart-panel.component';
     FooterComponent,
     NavBarComponent,
     AudioPlayerComponent,
-    CartPanelComponent,
+    CartComponent,
   ],
   template: `
     <app-header class="app-header">
@@ -28,7 +28,7 @@ import { CartPanelComponent } from './features/cart-panel/cart-panel.component';
     </app-main>
     <app-footer class="app-footer"><h1 class="h1">Footer</h1></app-footer>
     <app-audio-player></app-audio-player>
-    <app-cart-panel></app-cart-panel>
+    <app-cart></app-cart>
   `,
 })
 export class App {}

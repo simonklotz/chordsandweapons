@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SearchService } from '../../features/search/search.service';
-import { CartService } from '../../core/services/cart.service';
+import { CartService } from '../../features/cart/cart.service';
 import { genreMenuConfig } from './configs/genre-menu-config';
 import { moreMenuConfig } from './configs/more-menu-config';
 import { NavMenuComponent } from './nav-menu.component';

@@ -3,12 +3,12 @@ import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Product } from '../../core/models/product.interface';
-import { Track } from '../../core/models/track.interface';
-import { CartService } from '../../core/services/cart.service';
-import { Artwork } from '../../core/models/artwork.interface';
-import { QuantityInputComponent } from '../../shared/forms/quantity-input.component';
-import { AudioPlayerService } from '../audio-player/audio-player.service';
+import { Product } from './models/product.interface';
+import { Track } from '../../audio-player/models/track.interface';
+import { CartService } from '../../cart/cart.service';
+import { Artwork } from './models/artwork.interface';
+import { QuantityInputComponent } from '../../../shared/forms/quantity-input.component';
+import { AudioPlayerService } from '../../audio-player/audio-player.service';
 
 @Component({
   selector: 'app-product-detail',

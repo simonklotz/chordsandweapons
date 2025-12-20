@@ -1,5 +1,5 @@
-import { Track } from '../../../core/models/track.interface';
-import { Price } from '../../../core/models/price.interface';
+import { Track } from './track.interface';
+import { Price } from '../../../shared/product/models/price.interface';
 
 export interface Playlist {
   tracks: Track[];
