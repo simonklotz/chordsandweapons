@@ -6,25 +6,30 @@
   border: 2px solid $color-black;
 
   &__button {
-    width: 48px;
-    height: 48px;
+    width: 37px;
+    height: 37px;
 
     color: $color-white;
     background-color: $color-black;
 
-    font-size: 2.5rem;
-
     &-left {
       border-right: 2px solid $color-black;
+
+      &:hover {
+        border-right: 2px solid $color-grey;
+      }
     }
 
     &-right {
       border-left: 2px solid $color-black;
+
+      &:hover {
+        border-left: 2px solid $color-grey;
+      }
     }
 
     &:hover {
-      color: $color-black;
-      background-color: $color-white;
+      background-color: $color-grey;
     }
 
     &:active {
@@ -40,10 +45,9 @@
   }
 
   &__input-field {
-    width: calc(100% - 96px);
-    height: 48px;
+    width: calc(100% - 74px);
+    height: 37px;
     text-align: center;
-    font-size: 1.8rem;
 
     &:focus {
       // TODO return custom outline for accessibility

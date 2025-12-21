@@ -1,31 +1,16 @@
-/* CDK overlay essentials */
-@import "@angular/cdk/overlay-prebuilt.css";
+@import '@angular/cdk/overlay-prebuilt.css';
 
-/* Optional: custom web font for the dialog */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-
-/* Backdrop: transparent black */
 .app-backdrop {
   background: rgba(0, 0, 0, 0.6);
 }
 
-/* Panel: red background, rounded corners, drop shadow, custom font */
 .app-dialog-panel {
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    sans-serif;
-  background: white; /* deep red */
+  background: white;
   color: #fff;
-  //box-shadow: 0 20px 40px rgba(0,0,0,.35);
   overflow: hidden;
   border-bottom: 2px solid black;
 }
 
-/* Optional: a neat container for internal layout */
 .app-dialog-surface {
   padding: 20px 22px;
   display: grid;
@@ -34,7 +19,7 @@
 
 .app-dialog-title {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.8rem;
   letter-spacing: 0.2px;
 }
 

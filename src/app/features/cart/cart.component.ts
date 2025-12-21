@@ -1,10 +1,4 @@
-import {
-  Component,
-  effect,
-  ElementRef,
-  HostListener,
-  inject,
-} from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
@@ -29,6 +23,8 @@ import { CartItem } from './models/cart-item.interface';
           aria-modal="true"
           aria-label="Shopping cart"
           (click)="$event.stopPropagation()"
+          (keydown.enter)="$event.stopPropagation()"
+          (keydown.space)="$event.stopPropagation()"
         >
           <div class="cart-panel__header">
             <h2 class="cart-panel__title">Your Cart</h2>
@@ -38,12 +34,7 @@ import { CartItem } from './models/cart-item.interface';
               aria-label="Close cart"
               type="button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                 <path
                   d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                 />
@@ -67,9 +58,7 @@ import { CartItem } from './models/cart-item.interface';
                       <h3 class="cart-item__title">{{ item.product.title }}</h3>
                       <p class="cart-item__artist">{{ item.product.artist }}</p>
                       <div class="cart-item__price-info">
-                        <span class="cart-item__quantity"
-                          >Qty: {{ item.quantity }}</span
-                        >
+                        <span class="cart-item__quantity">Qty: {{ item.quantity }}</span>
                         <span class="cart-item__price">
                           {{ formatPrice(item) }}
                         </span>
@@ -97,11 +86,7 @@ import { CartItem } from './models/cart-item.interface';
                   {{ formatSubtotal() }}
                 </span>
               </div>
-              <button
-                class="cart-panel__checkout button"
-                type="button"
-                (click)="goToCheckout()"
-              >
+              <button class="cart-panel__checkout button" type="button" (click)="goToCheckout()">
                 Checkout
               </button>
             </div>
@@ -160,10 +145,7 @@ export class CartComponent {
   }
 
   formatSubtotal(): string {
-    return this.formatCurrency(
-      this.cartService.subtotal(),
-      this.cartService.currencyCode(),
-    );
+    return this.formatCurrency(this.cartService.subtotal(), this.cartService.currencyCode());
   }
 
   goToCheckout(): void {

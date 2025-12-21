@@ -1,4 +1,7 @@
 @use '../abstracts/fonts' as *;
+@use '../abstracts/fonts-roboto-mono' as *;
+@use '../abstracts/fonts-rokkitt' as *;
+@use '../abstracts/fonts-lora' as *;
 @use '../abstracts/variables' as *;
 
 html {
@@ -9,25 +12,120 @@ html {
 }
 
 .body {
-  font-family: 'Roboto Mono Regular', monospace;
+  font-family: 'Roboto Regular', monospace;
+  font-size: 1.6rem;
+  line-height: 1.5;
 
-  @media only screen and (max-width: $screen-sm-max) {
-    font-size: 1.6rem;
-    line-height: 1.2;
-  }
-  @media only screen and (min-width: $screen-md-min) {
-    font-size: 1.8rem;
-    line-height: 1.2;
-  }
+  //@media only screen and (max-width: $screen-sm-max) {
+  //  font-size: 1.4rem;
+  //}
+  //@media only screen and (min-width: $screen-md-min) {
+  //  font-size: 1.6rem;
+  //}
 
   .h1 {
-    @media only screen and (max-width: $screen-sm-max) {
-      font-size: 3.2rem;
-      line-height: 1.2;
+    font-size: 3rem;
+    line-height: 1.2;
+    //@media only screen and (max-width: $screen-sm-max) {
+    //  font-size: 3.2rem;
+    //  line-height: 1.2;
+    //}
+    //@media only screen and (min-width: $screen-md-min) {
+    //  font-size: 3.6rem;
+    //  line-height: 1.25;
+    //}
+  }
+
+  .h2 {
+    font-size: 2.6rem;
+  }
+
+  .p {
+    font-family: 'Roboto Regular', monospace;
+    font-size: 1.4rem;
+  }
+
+  .product-tile {
+    .product-info {
+      &__title {
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
+
+      &__artist {
+        font-size: 1.4rem;
+      }
+
+      &__price {
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
     }
-    @media only screen and (min-width: $screen-md-min) {
-      font-size: 3.6rem;
-      line-height: 1.25;
+    .product-actions {
+      &__add-to-cart {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .product-detail-wrapper {
+    .product-heading {
+    }
+
+    .product-info {
+      font-size: 1.4rem;
+    }
+
+    .product-description {
+    }
+
+    .product-actions {
+      font-size: 1.4rem;
+
+      .product-price {
+        font-size: 2.2rem;
+      }
+
+      .product-inventory-status {
+        font-size: 1.6rem;
+      }
+
+      .product-add-to-cart {
+        .quantity-input {
+          &__button {
+            font-size: 1.6rem;
+          }
+
+          &__input-field {
+            font-size: 1.6rem;
+          }
+        }
+
+        .add-to-cart-form__submit {
+          font-size: 1.4rem;
+          font-weight: bold;
+        }
+      }
+      .product-tracklist {
+        &__heading {
+          font-size: 1.6rem;
+        }
+
+        &__item {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  .audio-player {
+    &__track-info {
+      font-size: 1.4rem;
+    }
+
+    &__product-price {
+      font-size: 1.6rem;
     }
   }
 }

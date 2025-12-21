@@ -1,10 +1,17 @@
-@use "../abstracts/variables" as *;
-@use "../layout/responsive-layout" as *;
+@use '../abstracts/variables' as *;
+@use '../layout/responsive-layout' as *;
 
-.search-result {
+.product-list {
   width: 100%;
 
   @include responsive-layout();
+
+  &__header {
+    border: 2px solid $color-black;
+    padding: 12px;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
 
   &__wrapper {
     display: flex;

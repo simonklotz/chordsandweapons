@@ -12,24 +12,21 @@ import { filterValidQueries } from '../../search/helpers/filter-valid-queries.he
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-search-result',
+  selector: 'app-product-list',
   standalone: true,
   imports: [ProductTileComponent, AsyncPipe],
   template: `
-    <div class="search-result">
-      @if (title === 'Search result') {
-        <h1 class="search-result__title h1">
-          {{ title }}: {{ query$ | async }}
-        </h1>
-      } @else {
-        <h1 class="search-result__title h1">{{ title }}</h1>
-      }
-      <div class="search-result__wrapper">
+    <div class="product-list">
+      <div class="product-list__header">
+        @if (title === 'Search result') {
+          <h1 class="h1">{{ title }}: {{ query$ | async }}</h1>
+        } @else {
+          <h1 class="h1">{{ title }}</h1>
+        }
+      </div>
+      <div class="product-list__wrapper">
         @for (product of products(); track product) {
-          <app-product-tile
-            [product]="product"
-            class="app-product-tile"
-          ></app-product-tile>
+          <app-product-tile [product]="product" class="app-product-tile"></app-product-tile>
         }
       </div>
     </div>
@@ -62,14 +59,12 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    merge(this._searchService.searchResult$, this.fetchProducts()).subscribe(
-      (result) => {
-        this.products.set(result.products);
-        this.pageInfo.set({
-          ...result,
-        });
-      },
-    );
+    merge(this._searchService.searchResult$, this.fetchProducts()).subscribe((result) => {
+      this.products.set(result.products);
+      this.pageInfo.set({
+        ...result,
+      });
+    });
   }
 
   private fetchProducts(): Observable<ProductListResponse> {

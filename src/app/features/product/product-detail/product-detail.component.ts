@@ -16,21 +16,17 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
   template: `
     <div class="product-detail-wrapper">
       <div class="grid-item product-heading">
-        <h2>{{ product.title }}</h2>
+        <h1 class="h1">{{ product.title }}</h1>
       </div>
 
       <div class="grid-item product-info">
-        <p><strong>Artist:</strong> {{ product.artist }}</p>
-        <p><strong>Format:</strong> {{ product.format }}</p>
-        <p><strong>Label:</strong> {{ product.label }}</p>
+        <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
+        <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
+        <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
       </div>
 
       <div class="grid-item product-artwork">
-        <img
-          class="product-artwork__img"
-          [src]="artwork().url"
-          [alt]="artwork().altText"
-        />
+        <img class="product-artwork__img" [src]="artwork().url" [alt]="artwork().altText" />
         <div class="product-artwork__selection">
           @for (image of product.images; track image; let i = $index) {
             <img
@@ -47,7 +43,7 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
       </div>
 
       <div class="grid-item product-description">
-        <p>{{ product.description }}</p>
+        <p class="p">{{ product.description }}</p>
       </div>
 
       <div class="product-actions">
@@ -83,9 +79,7 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
               [decrease]="decreaseQuantity"
               [increase]="increaseQuantity"
             ></app-quantity-input>
-            <button class="button add-to-cart-form__submit" type="submit">
-              Add to cart
-            </button>
+            <button class="button add-to-cart-form__submit" type="submit">Add to cart</button>
           </form>
         </div>
 
