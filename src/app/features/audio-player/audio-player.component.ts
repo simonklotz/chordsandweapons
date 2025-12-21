@@ -6,8 +6,8 @@ import { PreviousButtonComponent } from './components/previous-button.component'
 import { NextButtonComponent } from './components/next-button.component';
 import { PlayButtonComponent } from './components/play-button.component';
 import { AudioPlayerService } from './audio-player.service';
-import { numberToCurrency } from '../../shared/helpers/number-to-currency';
 import { Router } from '@angular/router';
+import { numberToCurrency } from '../../shared/helpers/number-to-currency';
 
 @Component({
   selector: 'app-audio-player',

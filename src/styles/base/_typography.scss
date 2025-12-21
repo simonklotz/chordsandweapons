@@ -1,5 +1,5 @@
-@use "../abstracts/fonts" as *;
-@use "../abstracts/variables" as *;
+@use '../abstracts/fonts' as *;
+@use '../abstracts/variables' as *;
 
 html {
   // standard root-font-size of 16px is set to 10px (16 * 0,625 = 10)
@@ -9,13 +9,13 @@ html {
 }
 
 .body {
-  font-family: "Source Code Pro Regular", monospace;
+  font-family: 'Roboto Mono Regular', monospace;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: $screen-sm-max) {
     font-size: 1.6rem;
     line-height: 1.2;
   }
-  @media only screen and (min-width: 601px) {
+  @media only screen and (min-width: $screen-md-min) {
     font-size: 1.8rem;
     line-height: 1.2;
   }

@@ -1,4 +1,4 @@
-@use "../abstracts/variables" as *;
+@use '../abstracts/variables' as *;
 
 .quantity-input {
   display: flex;
@@ -12,7 +12,6 @@
     color: $color-white;
     background-color: $color-black;
 
-    font-family: "Source Code Pro Regular", monospace;
     font-size: 2.5rem;
 
     &-left {
@@ -44,7 +43,6 @@
     width: calc(100% - 96px);
     height: 48px;
     text-align: center;
-    font-family: "Source Code Pro Regular", monospace;
     font-size: 1.8rem;
 
     &:focus {
@@ -60,7 +58,7 @@
     }
 
     /* hiding arrows on Firefox */
-    &[type="number"] {
+    &[type='number'] {
       -moz-appearance: textfield;
     }
   }
