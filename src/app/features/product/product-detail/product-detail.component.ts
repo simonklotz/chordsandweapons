@@ -1,5 +1,4 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -9,23 +8,14 @@ import { CartService } from '../../cart/cart.service';
 import { Artwork } from './models/artwork.interface';
 import { QuantityInputComponent } from '../../../shared/forms/quantity-input.component';
 import { AudioPlayerService } from '../../audio-player/audio-player.service';
+import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
   template: `
     <div class="product-detail-wrapper">
-      <div class="grid-item product-heading">
-        <h1 class="h1">{{ product.title }}</h1>
-      </div>
-
-      <div class="grid-item product-info">
-        <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
-        <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
-        <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
-      </div>
-
-      <div class="grid-item product-artwork">
+      <div class="product-artwork">
         <img class="product-artwork__img" [src]="artwork().url" [alt]="artwork().altText" />
         <div class="product-artwork__selection">
           @for (image of product.images; track image; let i = $index) {
@@ -41,17 +31,16 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
           }
         </div>
       </div>
-
-      <div class="grid-item product-description">
-        <p class="p">{{ product.description }}</p>
-      </div>
-
-      <div class="product-actions">
-        <div class="grid-item product-price">
-          <strong>{{ price | currency: currencyCode }}</strong>
+      <div class="product-info">
+        <div class="product-info__heading">
+          <h1 class="h1">{{ product.title }}</h1>
         </div>
 
-        <div class="grid-item product-inventory-status">
+        <div class="product-info__price">
+          <strong>{{ price }}</strong>
+        </div>
+
+        <div class="product-info__inventory-status">
           @switch (product.inventoryStatus) {
             @case ('in_stock') {
               <span class="inventory-status in-stock">In stock</span>
@@ -65,7 +54,7 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
           }
         </div>
 
-        <div class="grid-item product-add-to-cart">
+        <div class="product-info__add-to-cart">
           <form
             class="add-to-cart-form"
             [formGroup]="addToCartForm"
@@ -83,13 +72,13 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
           </form>
         </div>
 
-        <div class="grid-item product-tracklist">
-          <h3 class="product-tracklist__heading">Tracklist</h3>
-          <ul class="product-tracklist__list">
+        <div class="product-info__tracklist">
+          <h4 class="h4 tracklist-heading">Tracklist</h4>
+          <ul class="ul tracklist-list">
             @for (track of product.trackList; track track.position) {
               <li
                 tabindex="0"
-                class="product-tracklist__list-item"
+                class="li tracklist-list__item"
                 (click)="playTrack(track)"
                 (keydown.enter)="playTrack(track)"
                 (keydown.space)="playTrack(track)"
@@ -99,10 +88,20 @@ import { AudioPlayerService } from '../../audio-player/audio-player.service';
             }
           </ul>
         </div>
+
+        <div class="product-info__release-details">
+          <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
+          <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
+          <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
+        </div>
+
+        <div class="product-info__description">
+          <p class="p">{{ product.description }}</p>
+        </div>
       </div>
     </div>
   `,
-  imports: [CurrencyPipe, QuantityInputComponent, ReactiveFormsModule],
+  imports: [QuantityInputComponent, ReactiveFormsModule],
 })
 export class ProductDetailComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
@@ -130,7 +129,7 @@ export class ProductDetailComponent {
   }
 
   get price(): string {
-    return this.product.price.amount;
+    return numberToCurrency(Number(this.product.price.amount));
   }
 
   get currencyCode(): string {

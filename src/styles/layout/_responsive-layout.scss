@@ -1,4 +1,4 @@
-@use "../abstracts/media-queries" as *;
+@use '../abstracts/media-queries' as *;
 
 @mixin responsive-layout {
   @include for-xxxs-screen {
@@ -42,7 +42,8 @@
   }
 
   @include for-xxl-screen {
-    max-width: 1400px;
+    // max-width: 1400px;
+    max-width: 1219px;
     margin: auto;
   }
 }
