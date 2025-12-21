@@ -30,37 +30,30 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
           />
         }
 
-        <app-previous-button
-          [disabled]="!audioPlayer.hasPrevious()"
-          (clicked)="audioPlayer.previous()"
-        ></app-previous-button>
-        <app-play-button
-          [isPlaying]="audioPlayer.isPlaying()"
-          (clicked)="audioPlayer.togglePlayPause()"
-        ></app-play-button>
-        <app-next-button
-          [disabled]="!audioPlayer.hasNext()"
-          (clicked)="audioPlayer.next()"
-        ></app-next-button>
-
-        <div
-          tabindex="0"
-          class="audio-player__track-info"
-          (click)="navigateToDetailView()"
-          (keydown.enter)="navigateToDetailView()"
-          (keydown.space)="navigateToDetailView()"
-        >
-          {{ track.position }}/{{ audioPlayer.playlist()?.tracks?.length }}
+        <div class="audio-player__track-title">
           {{ track.title }}
         </div>
 
-        @if (false) {
-          <progress
-            class="audio-player__progress"
-            [value]="audioPlayer.progress()"
-            max="100"
-          ></progress>
-        }
+        <div class="audio-player__controls">
+          <app-previous-button
+            [disabled]="!audioPlayer.hasPrevious()"
+            (clicked)="audioPlayer.previous()"
+          ></app-previous-button>
+          <app-play-button
+            [isPlaying]="audioPlayer.isPlaying()"
+            (clicked)="audioPlayer.togglePlayPause()"
+          ></app-play-button>
+          <app-next-button
+            [disabled]="!audioPlayer.hasNext()"
+            (clicked)="audioPlayer.next()"
+          ></app-next-button>
+        </div>
+
+        <div class="audio-player__progress-bar">PROGRESS BAR (tba)</div>
+
+        <div class="audio-player__position">
+          {{ track.position }}/{{ audioPlayer.playlist()?.tracks?.length }}
+        </div>
 
         <div
           tabindex="0"
@@ -70,7 +63,7 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
           (keydown.space)="addToCart()"
         >
           <app-cart-button></app-cart-button>
-          <div class="audio-player__product-price">
+          <div class="product-price">
             {{ price }}
           </div>
         </div>
