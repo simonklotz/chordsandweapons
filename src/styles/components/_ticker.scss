@@ -1,0 +1,74 @@
+@use '../abstracts/variables' as *;
+
+.ticker {
+  position: relative;
+  bottom: 0;
+  height: 120px;
+  width: 100%;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  container-type: size;
+  container-name: ticker;
+
+  background: $color-accent;
+
+  &__track {
+    display: flex;
+    white-space: nowrap;
+    will-change: transform;
+    height: 100%;
+
+    animation-name: var(--ticker-direction, left);
+    animation-duration: var(--ticker-speed, 50s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &__text {
+    display: inline-block;
+    font-family: 'Roboto SemiBoldItalic', monospace;
+    font-size: 100cqh;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    // Second instance is hidden from screen readers to avoid duplication
+    &:last-child {
+      // Visual duplication only, no semantic duplication
+    }
+  }
+}
+
+@keyframes left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    // Move exactly 50% to the left (the width of one text instance)
+    // This creates a perfect loop as the second instance takes over
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    // Move back to start position (right-to-left becomes left-to-right)
+    transform: translateX(0);
+  }
+}
+
+// Respect user preference for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .ticker-banner__track {
+    animation-play-state: paused;
+  }
+}

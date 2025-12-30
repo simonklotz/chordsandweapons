@@ -1,22 +1,29 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ProductApiService } from '../product-api.service';
-import { ProductTileComponent } from '../../../shared/product/product-tile.component';
-import { RouteData } from './models/route-data.interface';
-import { SearchService } from '../../search/search.service';
-import { merge, Observable, of } from 'rxjs';
-import { ProductListItem } from './models/product-list-item.interface';
-import { PageInfo } from './models/page-info.interface';
-import { ProductListResponse } from './models/product-list-response.interface';
-import { filterValidQueries } from '../../search/helpers/filter-valid-queries.helper';
 import { AsyncPipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { merge, Observable, of } from 'rxjs';
+import { ProductTileComponent } from '../../../shared/components/product-tile.component';
+import { TickerComponent } from '../../../shared/components/ticker.component';
+import { filterValidQueries } from '../../search/helpers/filter-valid-queries.helper';
+import { SearchService } from '../../search/search.service';
+import { ProductListItem } from './models/product-list-item.interface';
+import { ProductListResponse } from './models/product-list-response.interface';
+import { PageInfo } from './models/page-info.interface';
+import { RouteData } from './models/route-data.interface';
+import { ProductApiService } from '../product-api.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [ProductTileComponent, AsyncPipe],
+  imports: [ProductTileComponent, AsyncPipe, TickerComponent],
   template: `
     <div class="product-list">
+      <app-ticker
+        class="product-list__ticker"
+        [text]="'CHORDSANDWEAPONS'"
+        [speed]="150"
+      ></app-ticker>
+
       <div class="product-list__header">
         @if (title === 'Search result') {
           <h1 class="h1">{{ title }}: {{ query$ | async }}</h1>
@@ -24,6 +31,7 @@ import { AsyncPipe } from '@angular/common';
           <h1 class="h1">{{ title }}</h1>
         }
       </div>
+
       <div class="product-list__wrapper">
         @for (product of products(); track product) {
           <app-product-tile [product]="product" class="app-product-tile"></app-product-tile>

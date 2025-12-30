@@ -6,7 +6,7 @@ import { Product } from './models/product.interface';
 import { Track } from '../../audio-player/models/track.interface';
 import { CartService } from '../../cart/cart.service';
 import { Artwork } from './models/artwork.interface';
-import { QuantityInputComponent } from '../../../shared/forms/quantity-input.component';
+import { QuantityInputComponent } from '../../../shared/components/quantity-input.component';
 import { AudioPlayerService } from '../../audio-player/audio-player.service';
 import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
 

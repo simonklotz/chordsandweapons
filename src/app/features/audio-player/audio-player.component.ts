@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CartButtonComponent } from '../../shared/buttons/cart-button.component';
+import { CartButtonComponent } from '../../shared/components/cart-button.component';
 import { CartService } from '../cart/cart.service';
 import { ProductApiService } from '../product/product-api.service';
 import { PreviousButtonComponent } from './components/previous-button.component';

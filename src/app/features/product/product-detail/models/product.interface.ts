@@ -1,6 +1,6 @@
-import { Price } from '../../../../shared/product/models/price.interface';
+import { Price } from '../../../../shared/models/price.interface';
 import { Track } from '../../../audio-player/models/track.interface';
-import { InventoryStatus } from '../../../../shared/product/models/inventory-status.type';
+import { InventoryStatus } from '../../../../shared/models/inventory-status.type';
 
 export interface Product {
   id: number;
