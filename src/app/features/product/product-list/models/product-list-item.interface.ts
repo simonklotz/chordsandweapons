@@ -1,5 +1,5 @@
-import { Price } from '../../../../shared/product/models/price.interface';
-import { InventoryStatus } from '../../../../shared/product/models/inventory-status.type';
+import { Price } from '../../../../shared/models/price.interface';
+import { InventoryStatus } from '../../../../shared/models/inventory-status.type';
 import { Track } from '../../../audio-player/models/track.interface';
 
 export interface ProductListItem {

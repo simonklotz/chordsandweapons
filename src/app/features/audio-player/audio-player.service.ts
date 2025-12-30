@@ -1,15 +1,9 @@
-import {
-  computed,
-  DestroyRef,
-  inject,
-  Injectable,
-  signal,
-} from '@angular/core';
+import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { Howl, Howler } from 'howler';
 import { Track } from './models/track.interface';
 import { Playlist } from './models/playlist.interface';
 import { PlaybackState } from './models/playback-state.type';
-import { Price } from '../../shared/product/models/price.interface';
+import { Price } from '../../shared/models/price.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -38,11 +32,7 @@ export class AudioPlayerService {
 
   readonly currentTrack = computed<Track | null>(() => {
     const playlist = this._playlist();
-    if (
-      !playlist ||
-      playlist.currentIndex < 0 ||
-      playlist.currentIndex >= playlist.tracks.length
-    ) {
+    if (!playlist || playlist.currentIndex < 0 || playlist.currentIndex >= playlist.tracks.length) {
       return null;
     }
     return playlist.tracks[playlist.currentIndex];
@@ -130,9 +120,7 @@ export class AudioPlayerService {
       return;
     }
 
-    this._playlist.update((playlist) =>
-      playlist ? { ...playlist, currentIndex: index } : null,
-    );
+    this._playlist.update((playlist) => (playlist ? { ...playlist, currentIndex: index } : null));
 
     this.loadTrack(index);
   }

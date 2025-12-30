@@ -6,10 +6,17 @@
 
   @include responsive-layout();
 
+  &__ticker {
+    display: block;
+    width: 100%;
+    border: 2px solid $color-black;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
   &__header {
     border: 2px solid $color-black;
     padding: 12px;
-    margin-top: 1.6rem;
     margin-bottom: 1.6rem;
   }
 
