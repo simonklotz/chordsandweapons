@@ -12,6 +12,10 @@ export const genreMenuConfig: NavMenu = {
       route: '/genre/house',
     },
     {
+      label: 'Trance',
+      route: '/genre/trance',
+    },
+    {
       label: 'Electro',
       route: '/genre/electro',
     },

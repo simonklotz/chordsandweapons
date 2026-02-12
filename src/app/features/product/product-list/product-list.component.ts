@@ -68,6 +68,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     merge(this._searchService.searchResult$, this.fetchProducts()).subscribe((result) => {
+      console.log('Fetched products:', result);
       this.products.set(result.products);
       this.pageInfo.set({
         ...result,
@@ -78,11 +79,17 @@ export class ProductListComponent implements OnInit {
   private fetchProducts(): Observable<ProductListResponse> {
     switch (this.filter) {
       case 'latest':
-        return this._apiService.fetchProducts();
+        return this._apiService.fetchProducts(8);
       case 'techno':
+        return this._apiService.fetchProductsByGenre('techno', 8);
       case 'house':
+        return this._apiService.fetchProductsByGenre('house', 8);
+      case 'trance':
+        return this._apiService.fetchProductsByGenre('trance', 8);
       case 'electro':
+        return this._apiService.fetchProductsByGenre('electro', 8);
       case 'breaks':
+        return this._apiService.fetchProductsByGenre('breaks', 8);
       default:
         return of({
           products: [],

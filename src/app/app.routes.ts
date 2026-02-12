@@ -21,6 +21,11 @@ export const routes: Routes = [
     data: { title: 'House', filter: 'house' },
   },
   {
+    path: 'genre/trance',
+    component: ProductListComponent,
+    data: { title: 'Trance', filter: 'trance' },
+  },
+  {
     path: 'genre/electro',
     component: ProductListComponent,
     data: { title: 'Electro', filter: 'electro' },
@@ -56,8 +61,6 @@ export const routes: Routes = [
   {
     path: 'checkout',
     loadComponent: () =>
-      import('./features/checkout/checkout.component').then(
-        (m) => m.CheckoutComponent,
-      ),
+      import('./features/checkout/checkout.component').then((m) => m.CheckoutComponent),
   },
 ];
