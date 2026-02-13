@@ -1,21 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { merge, Observable, of } from 'rxjs';
 import { ProductTileComponent } from '../../../shared/components/product-tile.component';
 import { TickerComponent } from '../../../shared/components/ticker.component';
-import { filterValidQueries } from '../../search/helpers/filter-valid-queries.helper';
 import { SearchService } from '../../search/search.service';
-import { ProductListItem } from './models/product-list-item.interface';
+import { QueryParams } from '../../../core/services/query-params.interface';
+import { ProductApiService } from '../product-api.service';
 import { ProductListResponse } from './models/product-list-response.interface';
+import { ProductListItem } from './models/product-list-item.interface';
 import { PageInfo } from './models/page-info.interface';
 import { RouteData } from './models/route-data.interface';
-import { ProductApiService } from '../product-api.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [ProductTileComponent, AsyncPipe, TickerComponent],
+  imports: [ProductTileComponent, TickerComponent],
   template: `
     <div class="product-list">
       <app-ticker
@@ -26,7 +26,7 @@ import { ProductApiService } from '../product-api.service';
 
       <div class="product-list__header">
         @if (title === 'Search result') {
-          <h1 class="h1">{{ title }}: {{ query$ | async }}</h1>
+          <h1 class="h1">{{ title }} for: {{ query() }}</h1>
         } @else {
           <h1 class="h1">{{ title }}</h1>
         }
@@ -37,19 +37,26 @@ import { ProductApiService } from '../product-api.service';
           <app-product-tile [product]="product" class="app-product-tile"></app-product-tile>
         }
       </div>
+
+      @if (pageInfo().hasNextPage) {
+        <div class="product-list__load-more">
+          <button class="product-list__load-more-button" type="button" (click)="onLoadMore()">
+            Load More
+          </button>
+        </div>
+      }
     </div>
   `,
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _apiService = inject(ProductApiService);
   private readonly _searchService = inject(SearchService);
 
-  query$ = this._searchService.query$.pipe(filterValidQueries());
+  query = this._searchService.query;
   products = signal<ProductListItem[]>([]);
   pageInfo = signal<PageInfo>({
-    total: 0,
-    page: 0,
     limit: 0,
     hasNextPage: false,
   });
@@ -62,14 +69,56 @@ export class ProductListComponent implements OnInit {
     return this.routeSnapshotData.title;
   }
 
-  get filter(): string {
+  get filter(): string | undefined {
     return this.routeSnapshotData.filter;
   }
 
+  get isSearch(): boolean | undefined {
+    return this.routeSnapshotData.isSearch;
+  }
+
+  get searchQuery(): string | undefined {
+    return this._activatedRoute.snapshot.queryParamMap.get('q') ?? undefined;
+  }
+
   ngOnInit(): void {
-    merge(this._searchService.searchResult$, this.fetchProducts()).subscribe((result) => {
-      console.log('Fetched products:', result);
-      this.products.set(result.products);
+    if (this.searchQuery) {
+      this._searchService.query$.next(this.searchQuery);
+    }
+
+    merge(this._searchService.searchResult$, this.fetchProducts())
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((result) => {
+        this.products.set(result.products);
+        this.pageInfo.set({
+          ...result,
+        });
+      });
+  }
+
+  ngOnDestroy(): void {
+    this._searchService.query$.next(void 0);
+    this.products.set([]);
+    this.pageInfo.set({
+      limit: 0,
+      hasNextPage: false,
+    });
+  }
+
+  onLoadMore(): void {
+    let loadProducts$: Observable<ProductListResponse>;
+
+    if (this.isSearch) {
+      loadProducts$ = this._searchService.loadMore(
+        this.query() as string,
+        this.pageInfo().endCursor as string,
+      );
+    } else {
+      loadProducts$ = this.fetchProducts();
+    }
+
+    loadProducts$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe((result) => {
+      this.products.set([...this.products(), ...result.products]);
       this.pageInfo.set({
         ...result,
       });
@@ -77,24 +126,24 @@ export class ProductListComponent implements OnInit {
   }
 
   private fetchProducts(): Observable<ProductListResponse> {
+    const params: QueryParams = {};
+
+    if (this.pageInfo().endCursor) {
+      params['after'] = this.pageInfo().endCursor as string;
+    }
+
     switch (this.filter) {
       case 'latest':
-        return this._apiService.fetchProducts(8);
+        return this._apiService.fetchProducts(params);
       case 'techno':
-        return this._apiService.fetchProductsByGenre('techno', 8);
       case 'house':
-        return this._apiService.fetchProductsByGenre('house', 8);
       case 'trance':
-        return this._apiService.fetchProductsByGenre('trance', 8);
       case 'electro':
-        return this._apiService.fetchProductsByGenre('electro', 8);
       case 'breaks':
-        return this._apiService.fetchProductsByGenre('breaks', 8);
+        return this._apiService.fetchProducts({ ...params, genre: this.filter });
       default:
         return of({
           products: [],
-          total: 0,
-          page: 0,
           limit: 0,
           hasNextPage: false,
         });

@@ -1,30 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { ProductListResponse } from './product-list/models/product-list-response.interface';
 import { Product } from './product-detail/models/product.interface';
+import { QueryParams } from '../../core/services/query-params.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ProductApiService extends ApiService {
-  fetchProducts(first: number, after?: string): Observable<ProductListResponse> {
+  pageLimit = signal<number>(8);
+
+  fetchProducts(params: QueryParams): Observable<ProductListResponse> {
     return this.http.get<ProductListResponse>(this.BASE_URL + '/products', {
-      params: after ? { first, after } : { first },
+      params: {
+        ...params,
+        first: this.pageLimit(),
+      },
     });
   }
 
-  fetchProductsByGenre(
-    genre: string,
-    first: number,
-    after?: string,
-  ): Observable<ProductListResponse> {
-    return this.http.get<ProductListResponse>(this.BASE_URL + '/products', {
-      params: after ? { genre, first, after } : { genre, first },
-    });
-  }
-
-  searchProducts(searchQuery: string): Observable<ProductListResponse> {
+  searchProducts(params: QueryParams): Observable<ProductListResponse> {
     return this.http.get<ProductListResponse>(this.BASE_URL + '/products/search', {
-      params: { q: searchQuery, first: 8 },
+      params: {
+        ...params,
+        first: this.pageLimit(),
+      },
     });
   }
 

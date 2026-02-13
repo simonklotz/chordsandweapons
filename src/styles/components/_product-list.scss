@@ -1,0 +1,50 @@
+@use '../abstracts/variables' as *;
+@use '../layout/responsive-layout' as *;
+
+.product-list {
+  width: 100%;
+
+  @include responsive-layout();
+
+  &__ticker {
+    border: 2px solid $color-black;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  &__header {
+    border: 2px solid $color-black;
+    padding: 12px;
+    margin-bottom: 1.6rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__load-more {
+    display: flex;
+    justify-content: center;
+    padding: 2.4rem 0;
+  }
+
+  &__load-more-button {
+    padding: 0.75rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: $color-black;
+    background-color: transparent;
+    border: 2px solid $color-black;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-black;
+      color: $color-white;
+    }
+  }
+}

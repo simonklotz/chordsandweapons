@@ -1,9 +1,6 @@
 import { ProductListItem } from './product-list-item.interface';
+import { PageInfo } from './page-info.interface';
 
-export interface ProductListResponse {
+export interface ProductListResponse extends PageInfo {
   products: ProductListItem[];
-  total: number;
-  page: number;
-  limit: number;
-  hasNextPage: boolean;
 }
