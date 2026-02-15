@@ -93,6 +93,7 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
           <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
           <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
           <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
+          <div class="product-info__item"><strong>Genre:</strong> {{ getGenre() }}</div>
         </div>
 
         <div class="product-info__description">
@@ -138,6 +139,10 @@ export class ProductDetailComponent {
 
   loadArtwork(url: string, i: number): void {
     this.artwork.set({ url, altText: `${this.altText}-${i}` });
+  }
+
+  getGenre(): string {
+    return this.product.genre.toString().replaceAll(',', ', ');
   }
 
   addToCart(): void {
