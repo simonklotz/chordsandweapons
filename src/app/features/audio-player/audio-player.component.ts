@@ -52,7 +52,7 @@ import { numberToCurrency } from '../../shared/helpers/number-to-currency';
         <div class="audio-player__progress-bar">PROGRESS BAR (tba)</div>
 
         <div class="audio-player__position">
-          {{ track.position }}/{{ audioPlayer.playlist()?.tracks?.length }}
+          {{ track.position + 1 }}/{{ audioPlayer.playlist()?.tracks?.length }}
         </div>
 
         <div

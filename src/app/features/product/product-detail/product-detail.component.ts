@@ -172,10 +172,10 @@ export class ProductDetailComponent {
         this.product.trackList,
         this.product.images[0],
         this.product.price,
-        track.position - 1,
+        track.position,
       );
     } else {
-      this._audioPlayerService.playTrack(track.position - 1);
+      this._audioPlayerService.playTrack(track.position);
     }
   }
 }
