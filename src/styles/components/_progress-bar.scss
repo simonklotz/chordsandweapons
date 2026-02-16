@@ -1,0 +1,93 @@
+@use '../abstracts/variables' as *;
+
+$track-height: 4px;
+$track-border: 1.5px;
+$track-bg: $color-white;
+$track-fill: $color-black;
+
+$thumb-size: 10px;
+$thumb-border: 2px;
+$thumb-bg: $color-black;
+
+@mixin track() {
+  height: $track-height;
+  background: $track-bg;
+  border: $track-border solid $color-black;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+@mixin progress() {
+  height: $track-height;
+  background: $track-fill;
+  border: $track-border solid $color-black;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+@mixin thumb() {
+  width: $thumb-size;
+  height: $thumb-size;
+  border: $thumb-border solid $color-black;
+  border-radius: 0;
+  background: $thumb-bg;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.player__progress-bar-input {
+  -webkit-appearance: none;
+  appearance: none;
+
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font: inherit;
+  width: 100%;
+  cursor: pointer;
+
+  // Firefox
+  &::-moz-range-track {
+    @include track();
+  }
+  &::-moz-range-progress {
+    @include progress();
+  }
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+
+  // Chrome
+  &::-webkit-slider-runnable-track {
+    @include track();
+
+    background: linear-gradient(
+      to right,
+      $track-fill 0%,
+      $track-fill var(--progress, 0%),
+      $track-bg var(--progress, 0%),
+      $track-bg 100%
+    );
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+
+    @include thumb();
+    margin-top: calc(#{$track-height} / 2 - #{$track-border} - #{$thumb-size} / 2);
+  }
+
+  &::-ms-track {
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-black;
+    outline-offset: 4px;
+  }
+}
