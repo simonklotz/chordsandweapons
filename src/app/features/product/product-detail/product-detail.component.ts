@@ -33,7 +33,9 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
       </div>
       <div class="product-info">
         <div class="product-info__heading">
-          <h1 class="h1">{{ product.title }}</h1>
+          <h1 class="h1">
+            {{ product.title }}
+          </h1>
         </div>
 
         <div class="product-info__price">
@@ -93,6 +95,7 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
           <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
           <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
           <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
+          <div class="product-info__item"><strong>Catalog:</strong> {{ product.catalog }}</div>
           <div class="product-info__item"><strong>Genre:</strong> {{ getGenre() }}</div>
         </div>
 
