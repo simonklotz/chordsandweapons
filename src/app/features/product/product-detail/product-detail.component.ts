@@ -75,20 +75,26 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
         </div>
 
         <div class="product-info__tracklist">
-          <h4 class="h4 tracklist-heading">Tracklist</h4>
-          <ul class="ul tracklist-list">
-            @for (track of product.trackList; track track.position) {
-              <li
-                tabindex="0"
-                class="li tracklist-list__item"
-                (click)="playTrack(track)"
-                (keydown.enter)="playTrack(track)"
-                (keydown.space)="playTrack(track)"
-              >
-                {{ track.title }}
-              </li>
-            }
-          </ul>
+          <h4 class="h4 tracklist-heading">Tracklist:</h4>
+          @if (product.trackList.length) {
+            <ul class="ul tracklist-list">
+              @for (track of product.trackList; track track.position) {
+                <li
+                  [attr.tabindex]="track.previewUrl ? 0 : null"
+                  class="li tracklist-list__item"
+                  [class.tracklist-list__item--playable]="!!track.previewUrl"
+                  [class.tracklist-list__item--active]="isActiveTrack(track.position)"
+                  (click)="playTrack(track)"
+                  (keydown.enter)="playTrack(track)"
+                  (keydown.space)="playTrack(track)"
+                >
+                  {{ track.title }}
+                </li>
+              }
+            </ul>
+          } @else {
+            -- No tracks available --
+          }
         </div>
 
         <div class="product-info__release-details">
@@ -165,7 +171,19 @@ export class ProductDetailComponent {
     this.increaseQuantity.next();
   }
 
+  isActiveTrack(position: number): boolean {
+    const playlist = this._audioPlayerService.playlist();
+    if (!playlist || playlist.productId !== this.product.id) {
+      return false;
+    }
+    const currentTrack = this._audioPlayerService.currentTrack();
+    return currentTrack?.position === position;
+  }
+
   playTrack(track: Track): void {
+    if (!track.previewUrl) {
+      return;
+    }
     if (
       !this._audioPlayerService.playlist() ||
       this._audioPlayerService.playlist()?.productId !== this.product.id
