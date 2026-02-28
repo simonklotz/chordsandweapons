@@ -1,12 +1,13 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-quantity-input',
   standalone: true,
   template: `
-    <div class="quantity-input">
+    <div class="quantity-input" [ngClass]="isDisabled() ? 'quantity-input--disabled' : ''">
       <button
         class="button quantity-input__button quantity-input__button-left"
         type="button"
@@ -19,7 +20,7 @@ import { Observable } from 'rxjs';
         #quantityInput
         class="quantity-input__input-field"
         type="number"
-        min="1"
+        min="0"
         [value]="quantity()"
         [disabled]="isDisabled()"
         (keydown)="onKeydown($event)"
@@ -42,6 +43,7 @@ import { Observable } from 'rxjs';
       useExisting: QuantityInputComponent,
     },
   ],
+  imports: [NgClass],
 })
 export class QuantityInputComponent implements ControlValueAccessor {
   decrease = input<Observable<void>>();
@@ -85,6 +87,8 @@ export class QuantityInputComponent implements ControlValueAccessor {
       'Delete',
       'ArrowLeft',
       'ArrowRight',
+      'ArrowUp',
+      'ArrowDown',
     ];
     const allowedKeys = [...numericKeys, ...specialKeys];
 

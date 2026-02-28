@@ -50,9 +50,6 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
             @case ('low_stock') {
               <span class="inventory-status low-stock">Low stock</span>
             }
-            @case ('out_of_stock') {
-              <span class="inventory-status out-of-stock">Out of stock</span>
-            }
           }
         </div>
 
@@ -70,7 +67,9 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
               [decrease]="decreaseQuantity"
               [increase]="increaseQuantity"
             ></app-quantity-input>
-            <button class="button add-to-cart-form__submit" type="submit">Add to cart</button>
+            <button class="button add-to-cart-form__submit" type="submit" [disabled]="isOutOfStock">
+              {{ isOutOfStock ? 'SOLD OUT' : 'ADD TO CART' }}
+            </button>
           </form>
         </div>
 
@@ -127,7 +126,10 @@ export class ProductDetailComponent {
   increaseQuantity = new Subject<void>();
 
   addToCartForm = new FormGroup({
-    quantity: new FormControl(1),
+    quantity: new FormControl({
+      value: this.isOutOfStock ? 0 : 1,
+      disabled: this.isOutOfStock,
+    }),
   });
 
   get product(): Product {
@@ -146,6 +148,10 @@ export class ProductDetailComponent {
     return this.product.price.currencyCode;
   }
 
+  get isOutOfStock(): boolean {
+    return this.product.inventoryStatus === 'out_of_stock';
+  }
+
   loadArtwork(url: string, i: number): void {
     this.artwork.set({ url, altText: `${this.altText}-${i}` });
   }
@@ -162,12 +168,18 @@ export class ProductDetailComponent {
   }
 
   @HostListener('window:keydown.-')
-  handleMinusEvent() {
+  handleMinusEvent(): void {
+    if (this.isOutOfStock) {
+      return;
+    }
     this.decreaseQuantity.next();
   }
 
   @HostListener('window:keydown.+')
-  handlePlusEvent() {
+  handlePlusEvent(): void {
+    if (this.isOutOfStock) {
+      return;
+    }
     this.increaseQuantity.next();
   }
 

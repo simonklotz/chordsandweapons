@@ -45,8 +45,13 @@ import { numberToCurrency } from '../helpers/number-to-currency';
           </p>
         </div>
         <div class="product-actions">
-          <button class="product-actions__add-to-cart" type="button" (click)="addToCart()">
-            Add to cart
+          <button
+            class="product-actions__add-to-cart"
+            type="button"
+            [disabled]="isOutOfStock"
+            (click)="addToCart()"
+          >
+            {{ isOutOfStock ? 'SOLD OUT' : 'ADD TO CART' }}
           </button>
         </div>
       </div>
@@ -85,6 +90,10 @@ export class ProductTileComponent {
 
   get hasTrackPreview(): boolean {
     return this.product().trackList.some((track) => track.previewUrl);
+  }
+
+  get isOutOfStock(): boolean {
+    return this.product().inventoryStatus === 'out_of_stock';
   }
 
   openDetailView(): void {

@@ -5,6 +5,11 @@
   width: 100%;
   border: 2px solid $color-black;
 
+  &--disabled {
+    cursor: not-allowed;
+    border: 2px solid $color-disabled-background;
+  }
+
   &__button {
     width: 37px;
     height: 37px;
@@ -18,6 +23,10 @@
       &:hover {
         border-right: 2px solid $color-grey;
       }
+
+      &:disabled {
+        border-right: 2px solid $color-disabled-background;
+      }
     }
 
     &-right {
@@ -25,6 +34,10 @@
 
       &:hover {
         border-left: 2px solid $color-grey;
+      }
+
+      &:disabled {
+        border-left: 2px solid $color-disabled-background;
       }
     }
 
@@ -38,9 +51,9 @@
     }
 
     &:disabled {
-      cursor: default;
-      color: darkgray;
-      background-color: lightgray;
+      cursor: not-allowed;
+      background-color: $color-disabled-background;
+      color: $color-disabled-text;
     }
   }
 
