@@ -4,7 +4,7 @@ import { merge, Observable, of } from 'rxjs';
 import { ProductTileComponent } from '../../../shared/components/product-tile.component';
 import { TickerComponent } from '../../../shared/components/ticker.component';
 import { SearchService } from '../../search/search.service';
-import { QueryParams } from '../../../core/services/query-params.interface';
+import { QueryParams } from '../../../core/models/query-params.interface';
 import { ProductApiService } from '../product-api.service';
 import { ProductListResponse } from './models/product-list-response.interface';
 import { ProductListItem } from './models/product-list-item.interface';
