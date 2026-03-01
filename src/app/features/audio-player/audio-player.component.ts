@@ -55,7 +55,7 @@ import { NgClass } from '@angular/common';
           </div>
 
           <div class="player__position">
-            {{ track.position + 1 }}/{{ audioPlayer.playlist()?.tracks?.length }}
+            {{ track.position + 1 }}/{{ audioPlayer.playlist()?.trackCount }}
           </div>
 
           <div class="player__time">{{ currentTime() }}</div>
@@ -130,7 +130,7 @@ export class AudioPlayerComponent {
   });
 
   constructor() {
-    this.moveOnTitleOverflow();
+    this.moveTitleOnOverflow();
   }
 
   navigateToDetailView(): void {
@@ -140,7 +140,7 @@ export class AudioPlayerComponent {
     this._router.navigate(['release', this.productId]);
   }
 
-  moveOnTitleOverflow(): void {
+  moveTitleOnOverflow(): void {
     toObservable(this.audioPlayer.playbackState).subscribe(() => {
       const trackTitle = this.trackTitleElement()?.nativeElement;
       if (trackTitle && trackTitle?.scrollWidth > trackTitle?.clientWidth) {

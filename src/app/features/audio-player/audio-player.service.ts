@@ -100,6 +100,7 @@ export class AudioPlayerService {
     this._playlist.set({
       tracks: playableTracks,
       currentIndex: validStartIndex,
+      trackCount: tracks.length,
       productId,
       artworkUrl,
       productPrice,
