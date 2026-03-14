@@ -28,9 +28,11 @@ import { LoadingSpinnerComponent } from './features/loading-spinner/loading-spin
     <app-main class="app-main">
       <router-outlet></router-outlet>
     </app-main>
-    <app-footer class="app-footer"><h1 class="h1">Footer</h1></app-footer>
-    <app-audio-player></app-audio-player>
-    <app-cart></app-cart>
+    <app-footer class="app-footer">
+      <h1 class="h1">Footer</h1>
+    </app-footer>
+    <app-audio-player />
+    <app-cart />
     <app-loading-spinner />
   `,
 })

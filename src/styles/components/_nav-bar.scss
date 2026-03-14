@@ -1,5 +1,5 @@
-@use "../abstracts/variables" as *;
-@use "../layout/responsive-layout" as *;
+@use '../abstracts/variables' as *;
+@use '../layout/grid' as *;
 
 .app-nav-bar {
   display: block;
@@ -8,8 +8,6 @@
   .nav {
     display: flex;
     justify-content: space-between;
-
-    @include responsive-layout();
 
     &__list {
       display: inline-block;

@@ -1,30 +1,42 @@
 @use '../abstracts/variables' as *;
-@use '../layout/responsive-layout' as *;
+@use '../layout/grid' as *;
 
 .product-list {
   width: 100%;
 
-  @include responsive-layout();
+  @include grid('auto auto auto auto');
 
   &__ticker {
+    grid-column: inner-start / inner-end;
+    grid-row: 1;
+
     border: 2px solid $color-black;
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
   }
 
   &__header {
+    grid-column: inner-start / inner-end;
+    grid-row: 2;
+
     border: 2px solid $color-black;
     padding: 12px;
     margin-bottom: 1.6rem;
   }
 
   &__wrapper {
+    grid-column: inner-start / inner-end;
+    grid-row: 3;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
   &__load-more {
+    grid-column: inner-start / inner-end;
+    grid-row: 4;
+
     display: flex;
     justify-content: center;
     padding: 2.4rem 0;
@@ -39,7 +51,9 @@
     background-color: transparent;
     border: 2px solid $color-black;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
 
     &:hover,
     &:focus-visible {

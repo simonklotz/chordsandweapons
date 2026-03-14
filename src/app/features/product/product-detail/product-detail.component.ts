@@ -15,97 +15,103 @@ import { numberToCurrency } from '../../../shared/helpers/number-to-currency';
   standalone: true,
   template: `
     <div class="product-detail-wrapper">
-      <div class="product-artwork">
-        <img class="product-artwork__img" [src]="artwork().url" [alt]="artwork().altText" />
-        <div class="product-artwork__selection">
-          @for (image of product.images; track image; let i = $index) {
-            <img
-              tabindex="0"
-              class="product-artwork__img-select"
-              [src]="image"
-              [alt]="altText + '-' + i"
-              (click)="loadArtwork(image, i)"
-              (keydown.enter)="loadArtwork(image, i)"
-              (keydown.space)="loadArtwork(image, i)"
-            />
-          }
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-info__heading">
-          <h1 class="h1">
-            {{ product.title }}
-          </h1>
-        </div>
-
-        <div class="product-info__price">
-          <strong>{{ price }}</strong>
-        </div>
-
-        <div class="product-info__inventory-status">
-          @switch (product.inventoryStatus) {
-            @case ('in_stock') {
-              <span class="inventory-status in-stock">In stock</span>
+      <div class="product-detail-grid">
+        <div class="product-artwork">
+          <img class="product-artwork__img" [src]="artwork().url" [alt]="artwork().altText" />
+          <div class="product-artwork__selection">
+            @for (image of product.images; track image; let i = $index) {
+              <img
+                tabindex="0"
+                class="product-artwork__img-select"
+                [src]="image"
+                [alt]="altText + '-' + i"
+                (click)="loadArtwork(image, i)"
+                (keydown.enter)="loadArtwork(image, i)"
+                (keydown.space)="loadArtwork(image, i)"
+              />
             }
-            @case ('low_stock') {
-              <span class="inventory-status low-stock">Low stock</span>
-            }
-          }
+          </div>
         </div>
+        <div class="product-info">
+          <div class="product-info__heading">
+            <h1 class="h1">
+              {{ product.title }}
+            </h1>
+          </div>
 
-        <div class="product-info__add-to-cart">
-          <form
-            class="add-to-cart-form"
-            [formGroup]="addToCartForm"
-            (ngSubmit)="addToCart()"
-            role="form"
-            aria-label="Add to cart"
-          >
-            <app-quantity-input
-              class="add-to-cart-form__quantity"
-              formControlName="quantity"
-              [decrease]="decreaseQuantity"
-              [increase]="increaseQuantity"
-            ></app-quantity-input>
-            <button class="button add-to-cart-form__submit" type="submit" [disabled]="isOutOfStock">
-              {{ isOutOfStock ? 'SOLD OUT' : 'ADD TO CART' }}
-            </button>
-          </form>
-        </div>
+          <div class="product-info__price">
+            <strong>{{ price }}</strong>
+          </div>
 
-        <div class="product-info__tracklist">
-          <h4 class="h4 tracklist-heading">Tracklist:</h4>
-          @if (product.trackList.length) {
-            <ul class="ul tracklist-list">
-              @for (track of product.trackList; track track.position) {
-                <li
-                  [attr.tabindex]="track.previewUrl ? 0 : null"
-                  class="li tracklist-list__item"
-                  [class.tracklist-list__item--playable]="!!track.previewUrl"
-                  [class.tracklist-list__item--active]="isActiveTrack(track.position)"
-                  (click)="playTrack(track)"
-                  (keydown.enter)="playTrack(track)"
-                  (keydown.space)="playTrack(track)"
-                >
-                  {{ track.title }}
-                </li>
+          <div class="product-info__inventory-status">
+            @switch (product.inventoryStatus) {
+              @case ('in_stock') {
+                <span class="inventory-status in-stock">In stock</span>
               }
-            </ul>
-          } @else {
-            -- No tracks available --
-          }
-        </div>
+              @case ('low_stock') {
+                <span class="inventory-status low-stock">Low stock</span>
+              }
+            }
+          </div>
 
-        <div class="product-info__release-details">
-          <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
-          <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
-          <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
-          <div class="product-info__item"><strong>Catalog:</strong> {{ product.catalog }}</div>
-          <div class="product-info__item"><strong>Genre:</strong> {{ getGenre() }}</div>
-        </div>
+          <div class="product-info__add-to-cart">
+            <form
+              class="add-to-cart-form"
+              [formGroup]="addToCartForm"
+              (ngSubmit)="addToCart()"
+              role="form"
+              aria-label="Add to cart"
+            >
+              <app-quantity-input
+                class="add-to-cart-form__quantity"
+                formControlName="quantity"
+                [decrease]="decreaseQuantity"
+                [increase]="increaseQuantity"
+              ></app-quantity-input>
+              <button
+                class="button add-to-cart-form__submit"
+                type="submit"
+                [disabled]="isOutOfStock"
+              >
+                {{ isOutOfStock ? 'SOLD OUT' : 'ADD TO CART' }}
+              </button>
+            </form>
+          </div>
 
-        <div class="product-info__description">
-          <p class="p">{{ product.description }}</p>
+          <div class="product-info__tracklist">
+            <h4 class="h4 tracklist-heading">Tracklist:</h4>
+            @if (product.trackList.length) {
+              <ul class="ul tracklist-list">
+                @for (track of product.trackList; track track.position) {
+                  <li
+                    [attr.tabindex]="track.previewUrl ? 0 : null"
+                    class="li tracklist-list__item"
+                    [class.tracklist-list__item--playable]="!!track.previewUrl"
+                    [class.tracklist-list__item--active]="isActiveTrack(track.position)"
+                    (click)="playTrack(track)"
+                    (keydown.enter)="playTrack(track)"
+                    (keydown.space)="playTrack(track)"
+                  >
+                    {{ track.title }}
+                  </li>
+                }
+              </ul>
+            } @else {
+              -- No tracks available --
+            }
+          </div>
+
+          <div class="product-info__release-details">
+            <div class="product-info__item"><strong>Artist:</strong> {{ product.artist }}</div>
+            <div class="product-info__item"><strong>Format:</strong> {{ product.format }}</div>
+            <div class="product-info__item"><strong>Label:</strong> {{ product.label }}</div>
+            <div class="product-info__item"><strong>Catalog:</strong> {{ product.catalog }}</div>
+            <div class="product-info__item"><strong>Genre:</strong> {{ getGenre() }}</div>
+          </div>
+
+          <div class="product-info__description">
+            <p class="p">{{ product.description }}</p>
+          </div>
         </div>
       </div>
     </div>

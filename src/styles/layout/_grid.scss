@@ -1,0 +1,72 @@
+@use '../abstracts/media-queries' as *;
+
+@mixin grid($rows: auto) {
+  display: grid;
+  grid-template-columns: [page-start] auto [inner-start] 1219px [inner-end] auto [page-end];
+  grid-template-rows: $rows;
+
+  @include for-xxxs-screen {
+    grid-template-columns:
+      [page-start]
+      10px
+      [inner-start] calc(100% - 20px) [inner-end]
+      10px
+      [page-end];
+  }
+  @include for-xxs-screen {
+    grid-template-columns:
+      [page-start]
+      10px
+      [inner-start] calc(100% - 20px) [inner-end]
+      10px
+      [page-end];
+  }
+  @include for-xs-screen {
+    grid-template-columns:
+      [page-start]
+      10px
+      [inner-start] calc(100% - 20px) [inner-end]
+      10px
+      [page-end];
+  }
+  @include for-small-screen {
+    grid-template-columns:
+      [page-start]
+      12px
+      [inner-start] calc(100% - 24px) [inner-end]
+      12px
+      [page-end];
+  }
+  @include for-medium-screen {
+    grid-template-columns:
+      [page-start]
+      12px
+      [inner-start] calc(100% - 24px) [inner-end]
+      12px
+      [page-end];
+  }
+  @include for-large-screen {
+    grid-template-columns:
+      [page-start]
+      auto
+      [inner-start] 963px [inner-end]
+      auto
+      [page-end];
+  }
+  @include for-xl-screen {
+    grid-template-columns:
+      [page-start]
+      auto
+      [inner-start] 1219px [inner-end]
+      auto
+      [page-end];
+  }
+  @include for-xxl-screen {
+    grid-template-columns:
+      [page-start]
+      auto
+      [inner-start] 1219px [inner-end]
+      auto
+      [page-end];
+  }
+}
