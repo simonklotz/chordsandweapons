@@ -1,4 +1,12 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  linkedSignal,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { merge, Observable, of } from 'rxjs';
 import { ProductTileComponent } from '../../../shared/components/product-tile.component';
@@ -18,19 +26,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [ProductTileComponent, TickerComponent],
   template: `
     <div class="product-list">
-      <app-ticker
-        class="product-list__ticker"
-        [text]="'CHORDSANDWEAPONS'"
-        [speed]="150"
-      ></app-ticker>
-
-      <div class="product-list__header">
-        @if (title === 'Search result') {
-          <h1 class="h1">{{ title }} for: {{ query() }}</h1>
-        } @else {
-          <h1 class="h1">{{ title }}</h1>
-        }
-      </div>
+      <app-ticker class="product-list__ticker" [text]="tickerText()" [speed]="150"></app-ticker>
 
       <div class="product-list__wrapper">
         @for (product of products(); track product) {
@@ -55,6 +51,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private readonly _searchService = inject(SearchService);
 
   query = this._searchService.query;
+  tickerText = linkedSignal(() => this.query() ?? this.title);
   products = signal<ProductListItem[]>([]);
   pageInfo = signal<PageInfo>({
     limit: 0,
