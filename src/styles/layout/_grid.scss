@@ -1,6 +1,6 @@
 @use '../abstracts/media-queries' as *;
 
-@mixin grid($rows: auto) {
+@mixin grid($rows: auto, $mobile-right: 10px, $mobile-left: 10px) {
   display: grid;
   grid-template-columns: [page-start] auto [inner-start] 1219px [inner-end] auto [page-end];
   grid-template-rows: $rows;
@@ -8,25 +8,25 @@
   @include for-xxxs-screen {
     grid-template-columns:
       [page-start]
-      10px
-      [inner-start] calc(100% - 20px) [inner-end]
-      10px
+      $mobile-left
+      [inner-start] calc(100% - $mobile-left - $mobile-right) [inner-end]
+      $mobile-right
       [page-end];
   }
   @include for-xxs-screen {
     grid-template-columns:
       [page-start]
-      10px
-      [inner-start] calc(100% - 20px) [inner-end]
-      10px
+      $mobile-left
+      [inner-start] calc(100% - $mobile-left - $mobile-right) [inner-end]
+      $mobile-right
       [page-end];
   }
   @include for-xs-screen {
     grid-template-columns:
       [page-start]
-      10px
-      [inner-start] calc(100% - 20px) [inner-end]
-      10px
+      $mobile-left
+      [inner-start] calc(100% - $mobile-left - $mobile-right) [inner-end]
+      $mobile-right
       [page-end];
   }
   @include for-small-screen {
