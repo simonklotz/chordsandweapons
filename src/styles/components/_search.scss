@@ -1,0 +1,50 @@
+@use '../abstracts/variables' as *;
+@use '../layout/grid' as *;
+
+.app-dialog-panel {
+  .app-dialog-surface {
+    background-color: #ededf2;
+    height: 50px;
+
+    @include grid();
+
+    .search {
+      grid-column: inner-start / inner-end;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__input {
+        width: 100%;
+        margin-right: 8px;
+        padding-left: 10px;
+        height: 28px;
+      }
+
+      &__button-search {
+        &:disabled {
+          .search-icon {
+            fill: $color-disabled-background;
+          }
+        }
+      }
+
+      &__button-search,
+      &__button-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+      }
+
+      .search-icon,
+      .search-close-icon {
+        width: 24px;
+        height: 24px;
+        fill: $color-black;
+      }
+    }
+  }
+}

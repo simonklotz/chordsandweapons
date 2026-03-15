@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 import { merge, Observable, of } from 'rxjs';
 import { ProductTileComponent } from '../../../shared/components/product-tile.component';
 import { TickerComponent } from '../../../shared/components/ticker.component';
-import { SearchService } from '../../search/search.service';
 import { QueryParams } from '../../../core/models/query-params.interface';
 import { ProductApiService } from '../product-api.service';
 import { ProductListResponse } from './models/product-list-response.interface';
@@ -19,6 +18,7 @@ import { ProductListItem } from './models/product-list-item.interface';
 import { PageInfo } from './models/page-info.interface';
 import { RouteData } from './models/route-data.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SearchService } from '../../search/search.service';
 
 @Component({
   selector: 'app-product-list',
@@ -74,14 +74,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return this.routeSnapshotData.isSearch;
   }
 
-  get searchQuery(): string | undefined {
-    return this._activatedRoute.snapshot.queryParamMap.get('q') ?? undefined;
-  }
-
   ngOnInit(): void {
-    if (this.searchQuery) {
-      this._searchService.query$.next(this.searchQuery);
-    }
+    this._activatedRoute.queryParams.subscribe((params) => {
+      const query = params['q'] as string | undefined;
+
+      if (query) {
+        this._searchService.query$.next(query);
+      } else {
+        this._searchService.query$.next(void 0);
+      }
+    });
 
     merge(this._searchService.searchResult$, this.fetchProducts())
       .pipe(takeUntilDestroyed(this._destroyRef))
@@ -94,12 +96,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._searchService.query$.next(void 0);
     this.products.set([]);
     this.pageInfo.set({
       limit: 0,
       hasNextPage: false,
     });
+    this._searchService.query$.next(void 0);
   }
 
   onLoadMore(): void {

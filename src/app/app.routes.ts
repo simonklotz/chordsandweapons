@@ -38,7 +38,7 @@ export const routes: Routes = [
   {
     path: 'search',
     component: ProductListComponent,
-    data: { title: 'Search result', isSearch: true },
+    data: { title: 'Search', isSearch: true },
   },
   {
     path: 'release/:id',

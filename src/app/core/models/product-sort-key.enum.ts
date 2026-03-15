@@ -4,8 +4,8 @@ export enum ProductSortKey {
   ID = 'ID',
   PRICE = 'PRICE',
   PRODUCT_TYPE = 'PRODUCT_TYPE',
-  // Sort by relevance to the search terms when the query parameter is specified on the connection.
-  // Don't use this sort key when no search query is specified.
+  // Sort by relevance to the deprecated terms when the query parameter is specified on the connection.
+  // Don't use this sort key when no deprecated query is specified.
   RELEVANCE = 'RELEVANCE',
   TITLE = 'TITLE',
   UPDATED_AT = 'UPDATED_AT',

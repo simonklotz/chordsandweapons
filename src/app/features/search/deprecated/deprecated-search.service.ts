@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { DialogService } from '../../shared/dialog/dialog.service';
-import { ProductApiService } from '../product/product-api.service';
-import { ProductListResponse } from '../product/product-list/models/product-list-response.interface';
-import { filterValidQueries } from './filter-valid-queries.helper';
-import { SearchComponent } from './search.component';
+import { ProductApiService } from '../../product/product-api.service';
+import { DialogService } from '../../../shared/dialog/dialog.service';
+import { SearchComponent } from '../search.component';
+import { filterValidQueries } from '../filter-valid-queries.helper';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ProductListResponse } from '../../product/product-list/models/product-list-response.interface';
 
 @Injectable({ providedIn: 'root' })
-export class SearchService {
-  private readonly _router = inject(Router);
+export class DeprecatedSearchService {
   private readonly _dialog = inject(DialogService);
+  private readonly _router = inject(Router);
   private readonly _apiService = inject(ProductApiService);
 
   query$ = new BehaviorSubject<string | undefined>(void 0);
@@ -31,10 +31,10 @@ export class SearchService {
   openSearchDialog(): void {
     this._dialog
       .open<string, SearchComponent>(SearchComponent, '100px')
-      .closed.subscribe((query) => {
-        if (query) {
+      .closed.subscribe((searchQuery) => {
+        if (searchQuery) {
           this._router.navigate(['search'], {
-            queryParams: { q: query },
+            queryParams: { q: searchQuery },
           });
         }
       });

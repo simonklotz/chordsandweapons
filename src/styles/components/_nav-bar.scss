@@ -45,40 +45,49 @@
           justify-content: flex-end;
           align-items: center;
 
+          width: 100%;
+
+          .nav-icon {
+            width: 24px;
+            height: 24px;
+            fill: $color-black;
+          }
+
           .nav__item {
-            height: 32px;
             width: 32px;
+            height: 32px;
             border: none;
-            margin-left: 10px;
 
             @media only screen and (max-width: $screen-xs-max) {
               margin-right: 10px;
               margin-left: 0;
-            }
-
-            .nav-icon {
-              width: 32px;
-              height: 32px;
-              fill: $color-black;
             }
           }
 
           .nav__cart {
             position: relative;
             display: inline-block;
+            text-align: center;
+
+            .nav-icon {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
           }
 
           .cart-count-indicator {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: 20px;
+            right: -1px;
 
             padding: 0.125rem 0.375rem;
             border-radius: 9999px;
-            min-width: 1.25rem;
+            min-width: 1.75rem;
             text-align: center;
 
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
 
             background: $color-black;

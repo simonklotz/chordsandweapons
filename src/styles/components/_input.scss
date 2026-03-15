@@ -1,14 +1,9 @@
 @use '../abstracts/variables' as *;
 
-.button {
-  cursor: pointer;
-  background: none;
+.input {
+  outline: 1px solid $color-focus-outline;
 
   &:focus {
     outline: 2px solid $color-focus-outline;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
   }
 }
